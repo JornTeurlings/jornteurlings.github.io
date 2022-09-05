@@ -59,6 +59,8 @@ Algorithm App:
 			- QR Algorithm and Eigenvalues
 		MACHINE LEARNING:
 			- Future purposes ............
+	Styling:
+		
 
 			
 			
