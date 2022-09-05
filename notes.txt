@@ -1,0 +1,64 @@
+Algorithm App:
+
+	Algorithms:
+		SHORTEST PATH:
+			- Dijkstra
+			- Bellman-Ford
+			- A* search algorithm
+			- Floyd-Warshall algorithm
+			- Johnsons's algorithm
+			- Viterbi Algorithm
+			- Lee Algorithm
+
+		GRAPH TRAVERSAL:
+			- Depth First Search
+			- Breadth First Search
+			- Kruskal's Algorithm
+			- Prim's Algorithm
+			- Flood Fill Algorithm
+			- Wave Propagation
+			- Maximum Flow
+
+		DYNAMIC PROGRAMMING:
+			- Longest Common Subsequence
+			- Longest Increasing Subsequence
+			- Edit Distance
+			- Minimum Partition
+			- Ways to cover a distance
+			- Longest Path in Matrix
+			- Subset Sum Problem
+			- Optimal Strategy for a Game
+			- 0-1 Knapsack problem
+			- Assembly Line scheduling
+			- Duckworth-Lewis
+
+		SEARCHING AND SORTING:
+			- Binary Search Algorithm
+			- Kadane's Algorithm
+			- Boyer-Moore Majority Vote Algorithm
+			- Quicksort
+			- KMP Algorithm
+			- Z's Algorithm
+			- Merge Sort
+			- Heap Sort
+			- Counting Sort
+			- Selection Sort
+			- Insertion Sort
+
+		DATA:
+			- Data Compression
+			- Diffie-Hellman key exchange
+			- RSA
+			- Hashing
+			- Euclidean Algorithm
+			- Buchberger's algorithm
+			- Karatsuba multiplication
+			- Divide and Conquer
+			- Fibonacci Numbers
+			- Fast Fourier Transform
+			- QR Algorithm and Eigenvalues
+		MACHINE LEARNING:
+			- Future purposes ............
+
+			
+			
