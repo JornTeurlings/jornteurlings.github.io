@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-custom">
             <div className="container custom-nav-container">
                 <div className="nav-logo">
-                    LGRTHMS
+                    A*GRTHMS
                 </div>
                 <ul className="navbar-nav">
                     <li className='nav-item'>
