@@ -5,7 +5,7 @@ import { ItemTypes } from '../../../constants/ItemTypes';
 const PathGridBox = (props) => {
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.BEGIN,
-        drop: () => ({name: 'Some name'}),
+        drop: () => (props.setNewPoint(props.id)),
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),

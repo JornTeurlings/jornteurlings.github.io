@@ -21,11 +21,11 @@ const gridBuilder = (rowCount, columnCount) => {
 
 const PathGridContainer = () => {
     // const [columnCount, rowCount] = useRowCount();
-    const columnCount = 42;
+    const columnCount = 40;
     const rowCount = 25;
     const [matrix, setMatrix] = useState(gridBuilder(rowCount, columnCount));
     const [, updateState] = useState();
-    const [beginPointCell, setBeginPointCell] = useState([0, 0]);
+    const [beginPointCell, setBeginPointCell] = useState(1000);
     const [finalPointCell, setFinalPointCell] = useState([1, 1]);
     const forceUpdate = useCallback(() => updateState({}), []);
 
@@ -51,17 +51,20 @@ const PathGridContainer = () => {
     const squareBuilder = (squareKey, rowIndex, columnIndex, row = []) => {
         if (columnIndex > 0) {
             const square = matrix[squareKey];
+            let child = null;
+            if (squareKey === beginPointCell) {
+                child = <PathGridPoint />
+            }
             row.push(<PathGridBox
+                setNewPoint={setBeginPointCell}
                 id={squareKey}
                 active={square.active}
-                obstacle={square.obstacle}
-                start={square.start} 
-                finish={square.finish}
+                obstacle={square.active}
                 handleClick={(event) => {
                     onClick(event);
                     forceUpdate();
                 }}
-                children={square.start || square.finish}
+                children={child}
                 />
                 )
             return squareBuilder(squareKey - 1, rowIndex, columnIndex - 1, row);

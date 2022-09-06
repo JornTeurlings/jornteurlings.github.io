@@ -14,7 +14,7 @@ const PathGridPoint = (props) => {
 
     return (
         <div ref={drag} style ={{ opacity }}>
-            Hi
+            <i className='fa-solid fa-chess-pawn'></i>
         </div>
     )
 }
