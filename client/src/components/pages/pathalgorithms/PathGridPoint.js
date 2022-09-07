@@ -1,21 +1,18 @@
-import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../../constants/ItemTypes';
+import { Draggable } from 'react-beautiful-dnd';
 
 const PathGridPoint = (props) => {
-    const [{ isDragging}, drag] = useDrag({
-        type: ItemTypes.BEGIN,
-        item: { name: 'Any custom name',},
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging()
-        })
-    })
-
-    const opacity = isDragging ? 0.4 : 1;
-
+    const itemType = props.type === ItemTypes.BEGIN ? ItemTypes.BEGIN: ItemTypes.FINISH;
+    const itemClass = props.type === ItemTypes.BEGIN ? 'fa-location-arrow' : 'fa-location-dot';
     return (
-        <div ref={drag} style ={{ opacity }}>
-            <i className='fa-solid fa-chess-pawn'></i>
-        </div>
+        <Draggable draggableId={`${itemType}`} index={0} key={props.number}>
+            {(provided, snapshot) => (
+                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <i className={`fa-solid ${itemClass}`}></i>
+                </div>
+            )}
+        </Draggable>
+
     )
 }
 

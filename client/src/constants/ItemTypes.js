@@ -1,4 +1,5 @@
 export const ItemTypes = {
     FINISH: 'finish',
-    BEGIN: 'begin'
+    BEGIN: 'begin',
+    POINT: 'point'
 }

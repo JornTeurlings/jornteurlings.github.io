@@ -1,6 +1,8 @@
 import PathGridBox from "./PathGridBox";
 import PathGridPoint from "./PathGridPoint";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useEffect, useState, useCallback } from "react";
+import { ItemTypes } from "../../../constants/ItemTypes";
 
 const gridBuilder = (rowCount, columnCount) => {
     const totalSquares = rowCount * columnCount;
@@ -25,8 +27,8 @@ const PathGridContainer = () => {
     const rowCount = 25;
     const [matrix, setMatrix] = useState(gridBuilder(rowCount, columnCount));
     const [, updateState] = useState();
-    const [beginPointCell, setBeginPointCell] = useState(1000);
-    const [finalPointCell, setFinalPointCell] = useState([1, 1]);
+    const [beginPointCell, setBeginPointCell] = useState(500);
+    const [finalPointCell, setFinalPointCell] = useState(585);
     const forceUpdate = useCallback(() => updateState({}), []);
 
     
@@ -53,10 +55,15 @@ const PathGridContainer = () => {
             const square = matrix[squareKey];
             let child = null;
             if (squareKey === beginPointCell) {
-                child = <PathGridPoint />
+                child = <PathGridPoint number={0} type="begin"/>
             }
+
+            if (squareKey === finalPointCell) {
+                child = <PathGridPoint number={1} type="finish" />
+            }
+
+
             row.push(<PathGridBox
-                setNewPoint={setBeginPointCell}
                 id={squareKey}
                 active={square.active}
                 obstacle={square.active}
@@ -73,12 +80,34 @@ const PathGridContainer = () => {
         return (<div key={`row-${rowIndex}`}>{row}</div>);
     }
 
+    const onDragEnd = (result) => {
+        if (!result.destination) {
+            return;
+        }
+
+        const {source, destination} = result;
+
+        if (source.droppableId !== destination.droppableId) {
+            if (result.draggableId === ItemTypes.BEGIN) {
+                setBeginPointCell(parseInt(destination.droppableId));
+            } else if (result.draggableId === ItemTypes.FINISH) {
+                setFinalPointCell(parseInt(destination.droppableId));
+            }
+            
+        }
+        
+    }
+
+    console.log(matrix);
+
     return (
-        <div className="path-grid-container my-5 d-flex justify-content-center">
-            <div className="col-md-9 d-flex flex-wrap">
-                {rowBuilder(rowCount, columnCount)}
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="path-grid-container my-5 d-flex justify-content-center">
+                <div className="col-md-9 d-flex flex-wrap">
+                    {rowBuilder(rowCount, columnCount)}
+                </div>
             </div>
-        </div>
+        </DragDropContext>
     )
 
 }
