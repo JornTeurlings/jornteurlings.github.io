@@ -11,14 +11,14 @@ const PathGridBox = (props) => {
         borderRadius: '0px'
     }
 
-    if (props.active) {
+    if (props.obstacle) {
         sqrClass = 'border btn grid-box-active'
     } else if (props.current) {
         sqrClass = 'border btn btn-warning'
     }
 
     return (
-        <Droppable droppableId={`${props.id}`} type={ItemTypes.POINT} isDropDisabled={props.active}>
+        <Droppable droppableId={`${props.id}`} type={ItemTypes.POINT} isDropDisabled={props.obstacle}>
             {(provided, snapshot) => (
             <div 
                 ref={provided.innerRef}
