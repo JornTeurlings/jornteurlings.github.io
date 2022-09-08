@@ -29,42 +29,81 @@ const constructGrid2D = (grid, rowCount, columnCount) => {
 */
 
 const mapTo2D = (point, rows, columns) => {
-    const row = Math.floor(point / columns);
-    const column = point % columns;
-    return [row, column -1];
+    const row = Math.floor((point - 1) / columns);
+    const column = (point-1) % columns;
+    return [row, column];
 }
 
-const findNeighbours = (startRow, startCol, rowCount, columnCount, grid) => {
+const findNeighbours = (startRow, startCol, rowCount, columnCount) => {
     let neighboursUnfiltered = [
         startRow - 1 >= 0 ? [startRow - 1 , startCol] : [],
-        startRow+ 1 < rowCount ? [startRow+1, startCol] : [],
+        startRow + 1 < rowCount ? [startRow + 1, startCol] : [],
         startCol - 1 >= 0 ? [startRow , startCol - 1] : [],
         startCol + 1 < columnCount ? [startRow , startCol + 1] : []
     ];
     return neighboursUnfiltered;
 }
 
+
+
 const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish) => {
     let finished = false;
-    const [unvisitedNodes, grid2D] = constructGrid2D(grid, rowCount, columnCount);
+    const [, grid2D] = constructGrid2D(grid, rowCount, columnCount);
     const [startRow, startCol] = mapTo2D(start, rowCount, columnCount);
     const [finalRow, finalCol] = mapTo2D(finish, rowCount, columnCount); 
     grid2D[startRow][startCol].weight = 0; 
+    grid2D[startRow][startCol].previousNode = [startRow,startCol];
+
+    const checkVisited = (element) => {
+        return !grid2D[element[0]][element[1]].visited;
+    }
+
+    const getValidNeighbours = (unfilteredArray) => {
+        return unfilteredArray.filter((value) => value.length !== 0 && checkVisited(value) && !grid2D[value[0]][value[1]].obstacle); // add the condition for an obstacle yes or no
+    }
 
     let priorityQueue = [];
-    let neighboursUnfiltered = findNeighbours(startRow, startCol, rowCount, columnCount, grid2D);
-
-    priorityQueue.concat(neighboursUnfiltered.filter((value) => {
-        if (value.length === 0) {
-            return false;
-        } else if (grid2D[value[0]][value[1]].visited === false) {
-            return true;
-        }
-    }));
-
+    priorityQueue.push([startRow, startCol]);
+    
     while (priorityQueue.length > 0 && !finished) {
+        const currentCell = priorityQueue.shift();
+        const currentCellValues = grid2D[currentCell[0]][currentCell[1]]
+        if (currentCellValues.visited) {
+            continue;    
+        }
+        grid2D[currentCell[0]][currentCell[1]].visited = true;
+        const neighbouringcells = getValidNeighbours(findNeighbours(currentCell[0], currentCell[1], rowCount, columnCount));
+
+        for (const coordinate of neighbouringcells) {
+            let neighbourValue = grid2D[coordinate[0]][coordinate[1]];
+            let distance = currentCellValues.weight + 1;
+            if (distance < neighbourValue.weight) {
+                neighbourValue.weight = distance;
+                neighbourValue.previousNode = currentCell;
+            }
+        }
+        priorityQueue = priorityQueue.concat(neighbouringcells);
+
+
+        if (currentCell[0] === finalRow && currentCell[1] === finalCol) {
+            finished = true;
+        }
 
     }
+
+    let pathStop = grid2D[finalRow][finalCol];
+    let shortestPath = [[finalRow, finalCol]]
+
+    while (pathStop.weight !== 0) {
+        shortestPath.push(pathStop.previousNode);
+        pathStop = grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]];
+    }
+
+    console.log(shortestPath);
+
+    console.log(JSON.stringify(grid2D.map(value => value.map(inner => inner.weight === Number.MAX_SAFE_INTEGER ? '' : inner.weight))));
+
+    return grid2D;
 
 }
 

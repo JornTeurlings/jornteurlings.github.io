@@ -38,8 +38,8 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish) => {
 }
 
 const PathGridContainer = () => {
-    const columnCount = 40;
-    const rowCount = 25;
+    const columnCount = 20;
+    const rowCount = 20;
     const [matrix, setMatrix] = useState({});
     const [, updateState] = useState();
     const [beginPointCell, setBeginPointCell] = useState(20);
