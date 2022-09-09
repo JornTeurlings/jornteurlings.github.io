@@ -67,7 +67,7 @@ const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish) => 
     
     while (priorityQueue.length > 0 && !finished) {
         const currentCell = priorityQueue.shift();
-        const currentCellValues = grid2D[currentCell[0]][currentCell[1]]
+        const currentCellValues = currentCell ? grid2D[currentCell[0]][currentCell[1]] : null;
         if (currentCellValues.visited) {
             continue;    
         }
@@ -84,7 +84,6 @@ const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish) => 
         }
         priorityQueue = priorityQueue.concat(neighbouringcells);
 
-
         if (currentCell[0] === finalRow && currentCell[1] === finalCol) {
             finished = true;
         }
@@ -93,17 +92,15 @@ const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish) => 
 
     let pathStop = grid2D[finalRow][finalCol];
     let shortestPath = [[finalRow, finalCol]]
+    grid2D[finalRow][finalCol].onShortestPath = true;
 
-    while (pathStop.weight !== 0) {
+    while (pathStop.weight !== 0 && pathStop.visited) {
         shortestPath.push(pathStop.previousNode);
+        grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]].onShortestPath = true;
         pathStop = grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]];
     }
 
-    console.log(shortestPath);
-
-    console.log(JSON.stringify(grid2D.map(value => value.map(inner => inner.weight === Number.MAX_SAFE_INTEGER ? '' : inner.weight))));
-
-    return grid2D;
+    return [grid2D, shortestPath];
 
 }
 

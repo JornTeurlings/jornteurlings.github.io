@@ -13,8 +13,10 @@ const PathGridBox = (props) => {
 
     if (props.obstacle) {
         sqrClass = 'border btn grid-box-active'
-    } else if (props.current) {
+    } else if (props.path) {
         sqrClass = 'border btn btn-warning'
+    } else if (props.visited) {
+        sqrClass = 'border btn btn-info'
     }
 
     return (

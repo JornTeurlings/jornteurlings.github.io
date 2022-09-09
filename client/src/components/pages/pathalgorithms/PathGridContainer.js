@@ -5,7 +5,7 @@ import dijkstraAlgorithm from './algorithms/dijkstraAlgorithm';
 import PathGridBox from "./PathGridBox";
 import PathGridPoint from "./PathGridPoint";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ItemTypes } from "../../../constants/ItemTypes";
 
 const matrixBuilder = (rowCount, columnCount, begin, finish) => {
@@ -15,6 +15,7 @@ const matrixBuilder = (rowCount, columnCount, begin, finish) => {
         const squareDetails = {
             weight: Number.MAX_SAFE_INTEGER,
             previousNode: undefined,
+            onShortestPath: false,
             visited: false,
             obstacle: false,
             start: false,
@@ -34,13 +35,19 @@ const matrixBuilder = (rowCount, columnCount, begin, finish) => {
 }
 
 const runAlgorithm = async (grid, rowCount, columnCount, start, finish) => {
-    const response = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
+    const [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
+    let arrayNew = [].concat(...newGrid);
+    arrayNew.unshift({'x': 'x'});
+    let objectNew = Object.assign({}, arrayNew);
+    delete objectNew[0];
+
+    return objectNew;
 }
 
 const PathGridContainer = () => {
     const columnCount = 20;
     const rowCount = 20;
-    const [matrix, setMatrix] = useState({});
+    const [matrix, setMatrix] = useState([]);
     const [, updateState] = useState();
     const [beginPointCell, setBeginPointCell] = useState(20);
     const [finalPointCell, setFinalPointCell] = useState(80);
@@ -49,6 +56,9 @@ const PathGridContainer = () => {
     const onClick = (event) => {
         const id = event.target.id; 
         const matrixNew = matrix;
+        if (matrixNew[id].start || matrixNew[id].finish) {
+            return;
+        }
         matrixNew[id].obstacle = !matrixNew[id].obstacle;
         setMatrix(matrixNew); 
     }
@@ -79,6 +89,9 @@ const PathGridContainer = () => {
             row.push(<PathGridBox
                 id={squareKey}
                 obstacle={square.obstacle}
+                visited={square.visited}
+                path={square.onShortestPath}
+                weight={square.weight}
                 handleClick={(event) => {
                     onClick(event);
                     forceUpdate();
@@ -125,7 +138,10 @@ const PathGridContainer = () => {
 
     return (
         <>
-            <button type="button" onClick={() => runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell)} style={{ width: '50px'}}>Run Algorithm</button>
+            <button type="button" onClick={async() =>  {
+                const newGrid = await runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell);
+                setMatrix(newGrid);
+                }} style={{ width: '50px'}}>Run Algorithm</button>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="path-grid-container my-5 d-flex justify-content-center">
                     <div className="col-md-9 d-flex flex-wrap justify-content-center flex-column">
