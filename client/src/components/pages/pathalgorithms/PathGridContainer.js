@@ -44,7 +44,7 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish) => {
     return objectNew;
 }
 
-const PathGridContainer = () => {
+const PathGridContainer = (props) => {
     const columnCount = 20;
     const rowCount = 20;
     const [matrix, setMatrix] = useState([]);
@@ -88,6 +88,7 @@ const PathGridContainer = () => {
 
             row.push(<PathGridBox
                 id={squareKey}
+                key={squareKey}
                 obstacle={square.obstacle}
                 visited={square.visited}
                 path={square.onShortestPath}
@@ -133,15 +134,19 @@ const PathGridContainer = () => {
     }
 
     useEffect(() => {
+        if (props.active) {
+            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell).then(newGrid => setMatrix(newGrid));
+        } else {
+            setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
+        }
+    }, [props.active]);
+
+    useEffect(() => {
         setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));;
     }, []);
 
     return (
         <>
-            <button type="button" onClick={async() =>  {
-                const newGrid = await runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell);
-                setMatrix(newGrid);
-                }} style={{ width: '50px'}}>Run Algorithm</button>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="path-grid-container my-5 d-flex justify-content-center">
                     <div className="col-md-9 d-flex flex-wrap justify-content-center flex-column">

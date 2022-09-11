@@ -1,3 +1,7 @@
 .grid-box-active {
     background-color: #484b6a !important;
 }
+
+.grid-box-path {
+    background-color: #0D7377 !important;
+}
