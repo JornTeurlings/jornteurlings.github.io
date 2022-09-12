@@ -17,6 +17,7 @@ const PathNavigation = (props) => {
                 <select id="select-path-algorithm" className="mx-3 custom-algorithm-select" defaultValue="dijkstra">
                     <option value="dijkstra">Dijkstra's Algorithm</option>
                     <option value="astar">A* Algorithm</option>
+                    <option value="bfs">Breadth First Search</option>
                 </select>
             </div>
             <button onClick={onRunClick} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>

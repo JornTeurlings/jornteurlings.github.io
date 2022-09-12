@@ -57,6 +57,8 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorith
         case 'astar':
             newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish, setGrid);
             break;
+        case 'bfs':
+            break;
         default:
             newGrid = grid;
     }
@@ -68,13 +70,19 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorith
 }
 
 const PathGridContainer = (props) => {
-    const columnCount = 20;
-    const rowCount = 20;
+    let columnCount = 35;
+    let rowCount = 20;
     const [matrix, setMatrix] = useState([]);
     const [, updateState] = useState();
     const [beginPointCell, setBeginPointCell] = useState(20);
     const [finalPointCell, setFinalPointCell] = useState(80);
     const forceUpdate = useCallback(() => updateState({}), []);
+
+    const setFieldProperties = () => {
+        columnCount = (window.innerWidth) / 35;
+        rowCount = (document.getElementById('content-height').clientHeight) / 35;
+        setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
+    }
 
     const onClick = (event) => {
         const id = event.target.id; 
@@ -171,13 +179,17 @@ const PathGridContainer = (props) => {
     }, [props.active, props.reset]);
 
     useEffect(() => {
+        window.addEventListener('resize', setFieldProperties);
+    }, [])
+
+    useEffect(() => {
         setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));;
     }, []);
 
     return (
         <>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="path-grid-container my-5 d-flex justify-content-center">
+                <div id="content-height" className="path-grid-container my-5 d-flex justify-content-center">
                     <div className="col-md-9 d-flex flex-wrap justify-content-center flex-column">
                         {Object.keys(matrix).length !== 0 ? rowBuilder(rowCount, columnCount) : ''}
                     </div>
