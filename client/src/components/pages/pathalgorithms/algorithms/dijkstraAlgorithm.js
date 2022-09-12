@@ -1,49 +1,6 @@
-/*
-    Constructing the 2D Grid for better visualitation and an actual grid
-    Make a list of the unvisited nodes for the dijkstra algorithm
-
-    params: original grid, number of rows, number of columns
-    return: [list of unvisited nodes, 2d grid]
-
-*/
-
-const constructGrid2D = (grid, rowCount, columnCount) => {
-    let newGrid = new Array(rowCount).fill(0).map(() => new Array(columnCount).fill(0));
-    let unvisitedNodes = [];
-    const finalValue = Object.keys(grid).pop();
-    for (let i = 0; i < finalValue ; i++) {
-        const row = Math.floor(i / columnCount);
-        const column = i % columnCount;
-        unvisitedNodes.push([row, column]);
-        newGrid[row][column] = grid[i+1];
-    }
-
-    return [unvisitedNodes, newGrid];
-}
-
-/*
-    Going from a key to a 2d location
-
-    params: point, number of rows, number of columns
-    return: [x, y]
-*/
-
-const mapTo2D = (point, rows, columns) => {
-    const row = Math.floor((point - 1) / columns);
-    const column = (point-1) % columns;
-    return [row, column];
-}
-
-const findNeighbours = (startRow, startCol, rowCount, columnCount) => {
-    let neighboursUnfiltered = [
-        startRow - 1 >= 0 ? [startRow - 1 , startCol] : [],
-        startRow + 1 < rowCount ? [startRow + 1, startCol] : [],
-        startCol - 1 >= 0 ? [startRow , startCol - 1] : [],
-        startCol + 1 < columnCount ? [startRow , startCol + 1] : []
-    ];
-    return neighboursUnfiltered;
-}
-
+import { constructGrid2D } from "./helpers/constructGrid2D";
+import { findNeighbours } from './helpers/findNeighbours';
+import { mapTo2D } from "./helpers/pointTo2D";
 
 
 const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish) => {

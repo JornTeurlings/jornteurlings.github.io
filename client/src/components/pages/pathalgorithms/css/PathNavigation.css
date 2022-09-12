@@ -1,3 +1,36 @@
+.navigation-path-algorithm {
+    background-color: #6f74a1;
+    padding: 10px 0px;
+    border-radius:5px;
+}
+
+.run-path-algorithm {
+    background-color: #3ad3d8;
+    color:white !important;
+}
+
+.run-path-algorithm:hover {
+    background-color: #32b3b8;
+    border-color: #32b3b8;
+}
+
+.reset-path-algorithm {
+    background-color: #13A8AD;
+    color:white !important;
+}
+
+.reset-path-algorithm:hover {
+    background-color: #10898d;
+    border-color:#10898d;
+}
+
 .custom-algorithm-select {
-    
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.nav-path-algorithm-text {
+    color:white;
+    font-size:20px;
+    font-weight:bold;
 }

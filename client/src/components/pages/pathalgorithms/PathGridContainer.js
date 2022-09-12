@@ -7,6 +7,7 @@ import PathGridPoint from "./PathGridPoint";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useEffect, useState, useCallback } from "react";
 import { ItemTypes } from "../../../constants/ItemTypes";
+import aStarAlgorithm from './algorithms/aStarAlgorithm';
 
 const matrixBuilder = (rowCount, columnCount, begin, finish) => {
     const totalSquares = rowCount * columnCount;
@@ -34,13 +35,35 @@ const matrixBuilder = (rowCount, columnCount, begin, finish) => {
     return grid;
 }
 
-const runAlgorithm = async (grid, rowCount, columnCount, start, finish) => {
-    const [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
+const resetMatrix = (rowCount, columnCount, begin, finish, grid) => {
+    const totalSquares = rowCount * columnCount;
+    const gridNew = grid;
+    for (let key = 1; key <= totalSquares; key++) {
+        grid[key].onShortestPath = false;
+        grid[key].visited = false;
+        grid[key].previousNode = undefined;
+        grid[key].weight = Number.MAX_SAFE_INTEGER;
+    }
+
+    return gridNew;
+}
+
+const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorithm = 'astar', setGrid) => {
+    let newGrid = [];
+    switch(algorithm) {
+        case 'dijkstra': 
+            [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
+            break;
+        case 'astar':
+            newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish, setGrid);
+            break;
+        default:
+            newGrid = grid;
+    }
     let arrayNew = [].concat(...newGrid);
     arrayNew.unshift({'x': 'x'});
     let objectNew = Object.assign({}, arrayNew);
     delete objectNew[0];
-
     return objectNew;
 }
 
@@ -135,11 +158,17 @@ const PathGridContainer = (props) => {
 
     useEffect(() => {
         if (props.active) {
-            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell).then(newGrid => setMatrix(newGrid));
-        } else {
+            setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
+            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm, setMatrix).then(newGrid =>  {
+                setMatrix(newGrid)
+                props.setActive(false);
+            });
+        } else if (props.reset) {
+            console.log('arrivados');
             setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
+            props.setReset(false);
         }
-    }, [props.active]);
+    }, [props.active, props.reset]);
 
     useEffect(() => {
         setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));;

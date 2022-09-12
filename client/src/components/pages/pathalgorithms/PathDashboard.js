@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const PathDashboard = () => {
     const [runAlgorithm, setRunAlgorithm] = useState(false);
+    const [resetGrid, setResetGrid] = useState(false);
     const [activeAlgorithm, setActiveAlgorithm] = useState('dijkstra');
 
     const onAlgorithmRunClick = (algorithm) => {
@@ -12,13 +13,13 @@ const PathDashboard = () => {
     }
 
     const onResetClick = () => {
-        setRunAlgorithm(false);
+        setResetGrid(true);     
     }
 
     return (
         <div className="col-md-12 d-flex justify-content-center flex-column m-auto">
             <PathNavigation onAlgorithmRunClick={onAlgorithmRunClick} onResetClick={onResetClick}/>
-            <PathGridContainer active={runAlgorithm} algorithm={activeAlgorithm} />
+            <PathGridContainer active={runAlgorithm} reset={resetGrid} setReset={setResetGrid} setActive={setRunAlgorithm} algorithm={activeAlgorithm} />
         </div>
     )
 }
