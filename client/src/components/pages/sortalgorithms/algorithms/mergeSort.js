@@ -82,7 +82,6 @@ const mergeSortWrapper = async (
   setColorsArray,
   visualizationSpeed,
 ) => {
-    console.log(array);
   arr = array.concat();
 
   await mergeSort(
@@ -92,7 +91,6 @@ const mergeSortWrapper = async (
     setColorsArray,
     visualizationSpeed
   );
-    setColorsArray((new Array(arr.length)).fill(3));
 
 };
 

@@ -3,6 +3,7 @@ import './css/SortDashboard.css';
 import mergeSortWrapper from './algorithms/mergeSort';
 import selectionSortWrapper from './algorithms/selectionSort';
 import bubbleSortWrapper from './algorithms/bubbleSort';
+import insertionSortWrapper from './algorithms/insertionSort';
 
 import SortNavigation from "./SortNavigation";
 import SortGridContainer from "./SortGridContainer";
@@ -15,10 +16,13 @@ const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray
             await mergeSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
             break;
         case 'selection':
-            await selectionSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
+            await selectionSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10)
             break;
         case 'bubble':
             await bubbleSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
+            break;
+        case 'insertion':
+            await insertionSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
             break;
     }
 }

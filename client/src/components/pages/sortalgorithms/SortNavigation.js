@@ -17,6 +17,7 @@ const SortNavigation = (props) => {
                     <option value="merge">Merge Sort</option>
                     <option value="selection">Selection Sort</option>
                     <option value="bubble">Bubble Sort</option>
+                    <option value="insertion">Insertion Sort</option>
                 </select>
             </div>
             <button onClick={onRunClick}  className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>
