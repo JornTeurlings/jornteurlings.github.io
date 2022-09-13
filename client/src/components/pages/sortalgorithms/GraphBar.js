@@ -4,7 +4,8 @@ const GraphBar = (props) => {
     let graphStyle = {
         width: '5px',
         marginLeft: '1px',
-        height: `${props.height}%`
+        height: `${props.height}%`,
+        backgroundColor: props.color
     }
 
     return (

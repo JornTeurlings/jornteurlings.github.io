@@ -1,32 +1,21 @@
-import GraphBar from "./GraphBar"
-import { useEffect, useState } from 'react';
-import './algorithms/mergeSort';
+import GraphBar from "./GraphBar";
+
+const colors = {
+    0: '#6f74a1',
+    1: '#14FFEC',
+    2: 'red'
+}
+
 
 const SortGridContainer = (props) => {
-    const [currentArray, setCurrentArray] = useState([]);
-
-    const generateArray = () => {
-        const getRandomValue = () => {
-            const value = Math.floor(Math.random() * (99) + 1);
-            return value;
-        }
-        const fit  = window.innerWidth * 0.75;
-        let amount = Math.floor(fit / 6);
-        const array = new Array(amount).fill(0).map(() => getRandomValue());
-        setCurrentArray(array);
-    }
-
     const renderBars = () => {
-
-        return currentArray.map(value => (
-            <GraphBar height={value} />
-        ))
+        if (props.array !== null) {
+            return props.array.map((value, index) => (
+                <GraphBar key={index} height={value} color={colors[props.colorsArray[index]]}/>
+            ))
+        }
+        return <div></div>
     }
-
-    useEffect(() => {
-        generateArray();
-        props.setShuffle(false);
-    }, [props.shuffle])
 
     return (
         <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1">
