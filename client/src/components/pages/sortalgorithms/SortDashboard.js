@@ -1,16 +1,24 @@
 import './css/SortDashboard.css';
 
 import mergeSortWrapper from './algorithms/mergeSort';
+import selectionSortWrapper from './algorithms/selectionSort';
+import bubbleSortWrapper from './algorithms/bubbleSort';
 
 import SortNavigation from "./SortNavigation";
 import SortGridContainer from "./SortGridContainer";
 import { useState, useEffect } from 'react';
 
-const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray, colorsArray) => {
+const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray) => {
     let sortedArr = [];
     switch (algorithm) {
         case 'merge':
-            await mergeSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, colorsArray);
+            await mergeSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
+            break;
+        case 'selection':
+            await selectionSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
+            break;
+        case 'bubble':
+            await bubbleSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, 10);
             break;
     }
 }
@@ -35,7 +43,7 @@ const SortDashboard = () => {
     }
 
     const onAlgorithmRunClick = async (algorithm) => {
-       await runAlgorithm(currentArray, algorithm, setCurrentArray, setColorsArray, colorsArray);
+       await runAlgorithm(currentArray, algorithm, setCurrentArray, setColorsArray);
     }
 
     useEffect(() => {

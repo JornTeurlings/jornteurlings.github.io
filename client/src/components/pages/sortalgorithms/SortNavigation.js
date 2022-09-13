@@ -15,6 +15,8 @@ const SortNavigation = (props) => {
                 <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
                 <select id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="merge">
                     <option value="merge">Merge Sort</option>
+                    <option value="selection">Selection Sort</option>
+                    <option value="bubble">Bubble Sort</option>
                 </select>
             </div>
             <button onClick={onRunClick}  className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>

@@ -3,7 +3,8 @@ import GraphBar from "./GraphBar";
 const colors = {
     0: '#6f74a1',
     1: '#14FFEC',
-    2: 'red'
+    2: '#0D7377',
+    3: '#3ad3d'
 }
 
 

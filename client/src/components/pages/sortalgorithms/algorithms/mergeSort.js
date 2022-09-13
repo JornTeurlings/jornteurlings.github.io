@@ -1,82 +1,99 @@
-import promiseTimeout from "../../../../helpers/promiseTimeout";
+import promiseTimeout from '../../../../helpers/promiseTimeout';
 
 let arr = [];
 
-const merge = async (start, mid, end, setArray, setColorsArray, colorsArray) => {
-    let i = start, j = mid + 1, it = 0;
-    let sortedArr = new Array(end - start + 1);
-    let newColorsArray = colorsArray.slice(0);
+const merge = async (start, mid, end, setArray, setColorsArray, visualizationSpeed) => {
+    let i = start;
+    let j = mid + 1;
+    let it = 0;
+    let tempArr = new Array(end - start + 1);
+    let newColorsArray = new Array(arr.length).fill(0);
 
     while (i <= mid && j <= end) {
+        newColorsArray = new Array(arr.length).fill(0);
         newColorsArray[i] = 2;
         newColorsArray[j] = 2;
-        setColorsArray(newColorsArray);
-        await promiseTimeout({timeout: 200})
-        newColorsArray[i] = 0;
-        newColorsArray[j] = 0;
+        setColorsArray(newColorsArray.concat());
+        await promiseTimeout({timeout: visualizationSpeed});
 
         if (arr[i] > arr[j]) {
-            sortedArr[it] = arr[j];
-            j++;
+        tempArr[it] = arr[j];
+        j++;
         } else {
-            sortedArr[it] = arr[i];
-            i++;
+        tempArr[it] = arr[i];
+        i++;
         }
+
         it++;
     }
 
     while (i <= mid) {
+        newColorsArray = new Array(arr.length).fill(0);
         newColorsArray[i] = 2;
         newColorsArray[j] = 2;
-        setColorsArray(newColorsArray);
-        await promiseTimeout({timeout: 200})
-        newColorsArray[i] = 0;
-        newColorsArray[j] = 0;
+        setColorsArray(newColorsArray.concat());
+        await promiseTimeout({timeout: visualizationSpeed});
 
-        sortedArr[it] = arr[i];
+        tempArr[it] = arr[i];
         it++;
-        j++;
+        i++;
     }
 
     while (j <= end) {
+        newColorsArray = new Array(arr.length).fill(0);
         newColorsArray[i] = 2;
         newColorsArray[j] = 2;
-        setColorsArray(newColorsArray);
-        await promiseTimeout({timeout: 200})
-        newColorsArray[i] = 0;
-        newColorsArray[j] = 0;
+        setColorsArray(newColorsArray.concat());
+        await promiseTimeout({timeout: visualizationSpeed});
 
-        sortedArr[it] = arr[j];
+        tempArr[it] = arr[j];
         it++;
         j++;
     }
 
-
     it = 0;
-    for (let k = start; k < end; k++, it++) {
-        arr[k] = sortedArr[it];
+    for (let k = start; k <= end; k++, it++) {
+        arr[k] = tempArr[it];
+        newColorsArray = new Array(arr.length).fill(0);
         newColorsArray[k] = 1;
+        newColorsArray[i - 1] = 2;
+        newColorsArray[j - 1] = 2;
         setArray(arr.concat());
-        setColorsArray(newColorsArray);
-        await promiseTimeout({timeout: 200})
-        newColorsArray[k] = 0;
+        setColorsArray(newColorsArray.concat());
+        await promiseTimeout({timeout: visualizationSpeed});
     }
 }
 
-const mergeSort = async (start, end, setArray, setColorsArray, colorsArray) => {
-    if ((end-start) < 1) return;
-    let mid = Math.floor((start + end) / 2);
+const mergeSort = async (start, end, setArray, setColorsArray, visualizationSpeed ) => {
+  if (start >= end) return;
 
-    mergeSort(start, mid, setArray, setColorsArray, colorsArray);
-    mergeSort(mid + 1, end, setArray, setColorsArray, colorsArray);
+  let mid = Math.floor((start + end) / 2);
+  await mergeSort(start, mid, setArray, setColorsArray, visualizationSpeed);
+  await mergeSort(mid + 1, end, setArray, setColorsArray, visualizationSpeed);
 
-    merge(start, mid, end, setArray, setColorsArray, colorsArray);
-}
+  await merge(start, mid, end, setArray, setColorsArray, visualizationSpeed);
+};
 
-const mergeSortWrapper = async (array, start, end, setArray, setColorsArray, colorsArray) => {
-    arr = array.slice(0);
+const mergeSortWrapper = async (
+  array,
+  leftIndex,
+  rightIndex,
+  setArray,
+  setColorsArray,
+  visualizationSpeed,
+) => {
+    console.log(array);
+  arr = array.concat();
 
-    await mergeSort(start, end, setArray, setColorsArray, colorsArray);
-}
+  await mergeSort(
+    leftIndex,
+    rightIndex,
+    setArray,
+    setColorsArray,
+    visualizationSpeed
+  );
+    setColorsArray((new Array(arr.length)).fill(3));
+
+};
 
 export default mergeSortWrapper;
