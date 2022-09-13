@@ -13,21 +13,7 @@ const Navbar = () => {
                         <NavLink 
                         to="/path-algorithms"
                         className="nav-item-custom"
-                        >Path Algorithms
-                        </NavLink>
-                    </li>
-                    <li className='nav-item'>
-                        <NavLink 
-                        to="/graph-algorithms"
-                        className="nav-item-custom"
-                        >Graph Algorithms
-                        </NavLink>
-                    </li>
-                    <li className='nav-item'>
-                        <NavLink 
-                        to="/dynamic-programming"
-                        className="nav-item-custom"
-                        >Dynamic Programming
+                        >Shortest Path on Grid
                         </NavLink>
                     </li>
                     <li className='nav-item'>
@@ -35,6 +21,20 @@ const Navbar = () => {
                         to="/searching-and-sorting"
                         className="nav-item-custom"
                         >Searching and Sorting
+                        </NavLink>
+                    </li>
+                    <li className='nav-item'>
+                        <NavLink 
+                        to="/graph-algorithms"
+                        className="nav-item-custom"
+                        >Network/Graph Algorithms
+                        </NavLink>
+                    </li>
+                    <li className='nav-item'>
+                        <NavLink 
+                        to="/dynamic-programming"
+                        className="nav-item-custom"
+                        >Dynamic Programming
                         </NavLink>
                     </li>
                     <li className='nav-item'>

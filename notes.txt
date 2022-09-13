@@ -4,6 +4,7 @@ Algorithm App:
 		SHORTEST PATH:
 			- Dijkstra
 			- Bellman-Ford
+			- Depth First Search
 			- A* search algorithm
 			- Floyd-Warshall algorithm
 			- Johnsons's algorithm
@@ -11,13 +12,11 @@ Algorithm App:
 			- Lee Algorithm
 
 		GRAPH TRAVERSAL:
-			- Depth First Search
 			- Breadth First Search
 			- Kruskal's Algorithm
 			- Prim's Algorithm
 			- Flood Fill Algorithm
 			- Wave Propagation
-			- Maximum Flow
 
 		DYNAMIC PROGRAMMING:
 			- Longest Common Subsequence
@@ -34,16 +33,16 @@ Algorithm App:
 
 		SEARCHING AND SORTING:
 			- Binary Search Algorithm
-			- Kadane's Algorithm
-			- Boyer-Moore Majority Vote Algorithm
-			- Quicksort
-			- KMP Algorithm
-			- Z's Algorithm
 			- Merge Sort
 			- Heap Sort
+			- Quicksort
 			- Counting Sort
 			- Selection Sort
 			- Insertion Sort
+			- Kadane's Algorithm
+			- Boyer-Moore Majority Vote Algorithm
+			- KMP Algorithm
+			- Z's Algorithm
 
 		DATA:
 			- Data Compression

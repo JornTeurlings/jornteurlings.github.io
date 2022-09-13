@@ -1,13 +1,14 @@
 import './css/PathGridContainer.css'
 
 import dijkstraAlgorithm from './algorithms/dijkstraAlgorithm';
+import depthFirstSearch from './algorithms/depthFirstSearch';
+import aStarAlgorithm from './algorithms/aStarAlgorithm';
 
 import PathGridBox from "./PathGridBox";
 import PathGridPoint from "./PathGridPoint";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useEffect, useState, useCallback } from "react";
 import { ItemTypes } from "../../../constants/ItemTypes";
-import aStarAlgorithm from './algorithms/aStarAlgorithm';
 
 const matrixBuilder = (rowCount, columnCount, begin, finish) => {
     const totalSquares = rowCount * columnCount;
@@ -48,16 +49,17 @@ const resetMatrix = (rowCount, columnCount, begin, finish, grid) => {
     return gridNew;
 }
 
-const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorithm = 'astar', setGrid) => {
+const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorithm = 'astar') => {
     let newGrid = [];
     switch(algorithm) {
         case 'dijkstra': 
             [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
             break;
         case 'astar':
-            newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish, setGrid);
+            newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish);
             break;
-        case 'bfs':
+        case 'dfs':
+            [newGrid, ] = await depthFirstSearch(grid, rowCount, columnCount, start, finish);
             break;
         default:
             newGrid = grid;
@@ -115,8 +117,7 @@ const PathGridContainer = (props) => {
             if (squareKey === finalPointCell) {
                 child = <PathGridPoint number={1} type="finish" />
             }
-
-
+            
             row.push(<PathGridBox
                 id={squareKey}
                 key={squareKey}
@@ -167,19 +168,18 @@ const PathGridContainer = (props) => {
     useEffect(() => {
         if (props.active) {
             setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
-            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm, setMatrix).then(newGrid =>  {
+            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm).then(newGrid =>  {
                 setMatrix(newGrid)
                 props.setActive(false);
             });
         } else if (props.reset) {
-            console.log('arrivados');
             setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
             props.setReset(false);
         }
     }, [props.active, props.reset]);
 
     useEffect(() => {
-        window.addEventListener('resize', setFieldProperties);
+        // window.addEventListener('resize', setFieldProperties);
     }, [])
 
     useEffect(() => {
