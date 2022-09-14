@@ -1,8 +1,7 @@
 
 const SortNavigation = (props) => {
     const onRunClick = () => {
-        const algorithm = (document.getElementById('select-sort-algorithm')).value;
-        props.onAlgorithmRunClick(algorithm);
+        props.onAlgorithmRunClick();
     }
 
     const onShuffleClick = () => {
@@ -13,11 +12,13 @@ const SortNavigation = (props) => {
         <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
                 <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
-                <select id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="merge" disabled={props.disabled}>
+                <select onChange={() => props.setAlgorithm((document.getElementById('select-sort-algorithm')).value)} id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="binary" disabled={props.disabled}>
                     <option value="merge">Merge Sort</option>
                     <option value="selection">Selection Sort</option>
                     <option value="bubble">Bubble Sort</option>
                     <option value="insertion">Insertion Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="binary">Binary Search Algorithm</option>
                 </select>
             </div>
             <button onClick={onRunClick} disabled={props.disabled} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>

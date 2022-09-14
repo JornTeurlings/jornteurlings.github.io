@@ -12,7 +12,7 @@ const SortGridContainer = (props) => {
     const renderBars = () => {
         if (props.array !== null) {
             return props.array.map((value, index) => (
-                <GraphBar key={index} height={value} color={colors[props.colorsArray[index]]}/>
+                <GraphBar onClick={props.setSearchValue} index={index} key={index} height={value} color={colors[props.colorsArray[index]]}/>
             ))
         }
         return <div></div>

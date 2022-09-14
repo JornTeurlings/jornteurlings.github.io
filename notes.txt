@@ -32,9 +32,7 @@ Algorithm App:
 			- Duckworth-Lewis
 
 		SEARCHING AND SORTING:
-			- Binary Search Algorithm
 			- Heap Sort
-			- Quicksort
 			- Counting Sort
 			- Kadane's Algorithm
 			- Boyer-Moore Majority Vote Algorithm

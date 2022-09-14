@@ -1,3 +1,7 @@
 .graph-bar {
     background-color: #6f74a1;
 }
+
+.graph-bar:hover {
+    cursor:pointer;
+}

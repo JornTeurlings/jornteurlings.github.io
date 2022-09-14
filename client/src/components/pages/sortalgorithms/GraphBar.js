@@ -9,7 +9,7 @@ const GraphBar = (props) => {
     }
 
     return (
-        <div className='graph-bar' style={graphStyle}>
+        <div className='graph-bar' onClick={() => props.onClick(props.index)} style={graphStyle}>
 
         </div>
     )
