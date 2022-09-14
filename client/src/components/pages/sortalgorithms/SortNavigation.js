@@ -19,6 +19,7 @@ const SortNavigation = (props) => {
                     <option value="insertion">Insertion Sort</option>
                     <option value="quick">Quick Sort</option>
                     <option value="binary">Binary Search Algorithm</option>
+                    <option value="counting">Counting Sort Algorithm</option>
                 </select>
             </div>
             <button onClick={onRunClick} disabled={props.disabled} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>

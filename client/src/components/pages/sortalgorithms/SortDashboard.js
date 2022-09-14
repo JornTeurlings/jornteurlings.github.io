@@ -5,6 +5,7 @@ import selectionSortWrapper from './algorithms/selectionSort';
 import bubbleSortWrapper from './algorithms/bubbleSort';
 import insertionSortWrapper from './algorithms/insertionSort';
 import quickSortWrapper from './algorithms/quickSort';
+import countingSortWrapper from './algorithms/countingSort';
 
 import SortNavigation from "./SortNavigation";
 import SortGridContainer from "./SortGridContainer";
@@ -31,6 +32,9 @@ const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray
             break;
         case 'binary':
             await binarySearchWrapper(array, searchValue, 0, (array.length - 1), setArray, setColorsArray, visualizationSpeed);
+            break;
+        case 'counting':
+            await countingSortWrapper(array, 0, (array.length - 1), setArray, setColorsArray, visualizationSpeed);
             break;
         default:
             break;
