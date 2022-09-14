@@ -20,7 +20,7 @@ const SortGridContainer = (props) => {
 
     return (
         <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1">
-            <div  className="col-md-9 d-flex flex-wrap bar-chart-sort">
+            <div  className="col-md-9 d-flex flex-wrap bar-chart-sort justify-content-center">
                 {renderBars()}
             </div>
         </div>

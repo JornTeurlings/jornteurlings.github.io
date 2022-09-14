@@ -33,12 +33,9 @@ Algorithm App:
 
 		SEARCHING AND SORTING:
 			- Binary Search Algorithm
-			- Merge Sort
 			- Heap Sort
 			- Quicksort
 			- Counting Sort
-			- Selection Sort
-			- Insertion Sort
 			- Kadane's Algorithm
 			- Boyer-Moore Majority Vote Algorithm
 			- KMP Algorithm
