@@ -43,7 +43,7 @@ const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setMat
         grid2D[currentCell[0]][currentCell[1]].visited = true;
 
         setMatrix(convertToGrid(grid2D));
-        await promiseTimeout({timeout: 100});
+        await promiseTimeout({timeout: 20});
 
         const currentCellInfo = openList.get(stringedCell);
         openList.delete(stringedCell);
@@ -83,7 +83,7 @@ const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setMat
         let previousNode = (closedList.get(JSON.stringify(currentTraceCell))).parent;
         grid2D[currentTraceCell[0]][currentTraceCell[1]].onShortestPath = true;
         setMatrix(convertToGrid(grid2D));
-        await promiseTimeout({timeout: 100});
+        await promiseTimeout({timeout: 20});
         
         currentTraceCell = previousNode;
     }

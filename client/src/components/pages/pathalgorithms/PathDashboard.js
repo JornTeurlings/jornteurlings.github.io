@@ -18,7 +18,7 @@ const PathDashboard = () => {
 
     return (
         <div className="col-md-12 d-flex justify-content-center flex-column m-auto">
-            <PathNavigation onAlgorithmRunClick={onAlgorithmRunClick} onResetClick={onResetClick}/>
+            <PathNavigation onAlgorithmRunClick={onAlgorithmRunClick} onResetClick={onResetClick} active={runAlgorithm}/>
             <PathGridContainer active={runAlgorithm} reset={resetGrid} setReset={setResetGrid} setActive={setRunAlgorithm} algorithm={activeAlgorithm} />
         </div>
     )

@@ -169,6 +169,7 @@ const PathGridContainer = (props) => {
         if (props.active) {
             setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
             runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm, setMatrix);
+            props.setActive(false);
         } else if (props.reset) {
             setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
             props.setReset(false);

@@ -32,7 +32,7 @@ const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish, set
         }
         grid2D[currentCell[0]][currentCell[1]].visited = true;
         setMatrix(convertToGrid(grid2D));
-        await promiseTimeout({timeout: 100});
+        await promiseTimeout({timeout: 20});
 
         const neighbouringcells = getValidNeighbours(findNeighbours(currentCell[0], currentCell[1], rowCount, columnCount));
 
@@ -60,7 +60,7 @@ const dijkstraAlgorithm = async (grid, rowCount, columnCount, start, finish, set
         shortestPath.push(pathStop.previousNode);
         grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]].onShortestPath = true;
         setMatrix(convertToGrid(grid2D));
-        await promiseTimeout({timeout: 100});
+        await promiseTimeout({timeout: 20});
 
         pathStop = grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]];
     }

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 const SortNavigation = (props) => {
     const onRunClick = () => {
@@ -7,6 +8,10 @@ const SortNavigation = (props) => {
     const onShuffleClick = () => {
         props.setShuffle(true);
     }
+
+    useEffect(() => {
+        props.setAlgorithm((document.getElementById('select-sort-algorithm')).value);
+    }, [])
 
     return (
         <div className="m-auto my-3 d-flex w-50 justify-content-space-around navigation-path-algorithm">
