@@ -1,5 +1,6 @@
 import Graph from 'react-graph-vis';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import GraphDashboard from './GraphDashboard';
 
 const options = {
     layout: {
@@ -10,6 +11,11 @@ const options = {
     },
     interaction: {
         zoomView: false,
+    },
+    manipulation: {
+        enabled: true,
+        addNode: true,
+        addEdge:true,
     }
   };
   
@@ -24,14 +30,14 @@ const options = {
 const GraphContainer = (props) => {
     const createNode = (x, y) => {
         const color = randomColor();
-        setState(({ graph: { nodes, edges }, counter, ...rest }) => {
+        setGraphState(({ graph: { nodes, edges }, counter, ...rest }) => {
           const id = counter + 1;
           const from = Math.floor(Math.random() * (counter - 1)) + 1;
           return {
             graph: {
               nodes: [
                 ...nodes,
-                { id, label: `Node ${id}`, color, x, y }
+                { id, label: `${id}`, x, y, font: {size:20} }
               ],
               edges: [
                 ...edges,
@@ -42,38 +48,55 @@ const GraphContainer = (props) => {
             ...rest
           }
         });
-      }
-      const [state, setState] = useState({
-        counter: 5,
+    }
+
+    const [graphState, setGraphState] = useState({
+        counter: 15,
         graph: {
-          nodes: [
-            { id: 1, label: "Node 1", color: "#e04141" },
-            { id: 2, label: "Node 2", color: "#e09c41" },
-            { id: 3, label: "Node 3", color: "#e0df41" },
-            { id: 4, label: "Node 4", color: "#7be041" },
-            { id: 5, label: "Node 5", color: "#41e0c9" }
-          ],
-          edges: [
-            { from: 1, to: 2 },
-            { from: 1, to: 3 },
-            { from: 2, to: 4 },
-            { from: 2, to: 5 }
-          ]
+            nodes: new Array(10).fill(null).map((_, i) => ({id: i + 1, label: `${i + 1}`, font: { size: 20}})),
+            edges: []
         },
         events: {
-          select: ({ nodes, edges }) => {
-            console.log("Selected nodes:");
-            console.log(nodes);
-            console.log("Selected edges:");
-            console.log(edges);
-            alert("Selected node: " + nodes);
-          },
-          doubleClick: ({ pointer: { canvas } }) => {
+            select: ({ nodes, edges }) => {
+
+        },
+        doubleClick: ({ pointer: { canvas } }) => {
             createNode(canvas.x, canvas.y);
-          }
         }
-      })
-      const { graph, events } = state;
+        }
+    })
+
+    const { graph, events } = graphState;
+
+    useEffect(() => {
+        let newEdges = [];
+        graph.nodes.forEach((value) => {
+            const randomAmountEdges = Math.floor(Math.random() * (1 + 1) + 1);
+            let newArray = new Array(randomAmountEdges).fill(0).map((_, i) => (
+                {
+                    from: value.id, 
+                    to: Math.floor(Math.random() * graph.nodes.length),
+                    weight: Math.floor(Math.random() * 10),
+                }
+            ))
+
+            newEdges = newEdges.concat(newArray);
+        });
+
+        setGraphState(({ graph: { nodes, edges },...rest }) => {
+            return {
+                graph: {
+                  nodes: [
+                    ...nodes,
+                  ],
+                  edges: newEdges,
+                },
+                ...rest
+              };
+        });
+
+    }, []);
+
     return (
         <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1">
             <div  className="col-md-9 d-flex flex-wrap bar-chart-sort justify-content-center">
