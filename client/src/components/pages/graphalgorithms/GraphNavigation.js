@@ -12,19 +12,13 @@ const GraphNavigation = (props) => {
         <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
                 <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
-                <select onChange={() => props.setAlgorithm((document.getElementById('select-sort-algorithm')).value)} id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="binary" disabled={props.disabled}>
-                    <option value="merge">Merge Sort</option>
-                    <option value="selection">Selection Sort</option>
-                    <option value="bubble">Bubble Sort</option>
-                    <option value="insertion">Insertion Sort</option>
-                    <option value="quick">Quick Sort</option>
-                    <option value="binary">Binary Search Algorithm</option>
-                    <option value="counting">Counting Sort Algorithm</option>
+                <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select" defaultValue="binary" disabled={props.disabled}>
+                    <option value="merge">Dijkstra's Algorithm</option>
                 </select>
             </div>
             <button onClick={onRunClick} disabled={props.disabled} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>
             {/* <button className="btn btn-warning mx-3" type="button">Example Grid</button> */}
-            <button onClick={onShuffleClick} disabled={props.disabled} className="btn reset-path-algorithm mx-3" type="button">Shuffle Data</button>
+            <button onClick={onShuffleClick} disabled={props.disabled} className="btn reset-path-algorithm mx-3" type="button">New Graph</button>
             {/* <div>
                 <label for="visualization-speed" className="form-label" style={{color: 'white'}}>Visualization Speed</label>
                 <input 
