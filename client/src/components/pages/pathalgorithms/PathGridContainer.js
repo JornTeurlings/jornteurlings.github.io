@@ -49,17 +49,17 @@ const resetMatrix = (rowCount, columnCount, begin, finish, grid) => {
     return gridNew;
 }
 
-const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorithm = 'astar') => {
+const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorithm = 'astar', setMatrix) => {
     let newGrid = [];
     switch(algorithm) {
         case 'dijkstra': 
-            [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish);
+            [newGrid, ] = await dijkstraAlgorithm(grid, rowCount, columnCount, start, finish, setMatrix);
             break;
         case 'astar':
-            newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish);
+            newGrid = await aStarAlgorithm(grid, rowCount, columnCount, start, finish, setMatrix);
             break;
         case 'dfs':
-            [newGrid, ] = await depthFirstSearch(grid, rowCount, columnCount, start, finish);
+            [newGrid, ] = await depthFirstSearch(grid, rowCount, columnCount, start, finish, setMatrix);
             break;
         default:
             newGrid = grid;
@@ -168,10 +168,7 @@ const PathGridContainer = (props) => {
     useEffect(() => {
         if (props.active) {
             setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
-            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm).then(newGrid =>  {
-                setMatrix(newGrid)
-                props.setActive(false);
-            });
+            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm, setMatrix);
         } else if (props.reset) {
             setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
             props.setReset(false);

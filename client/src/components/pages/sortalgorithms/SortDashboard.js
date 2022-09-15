@@ -87,7 +87,12 @@ const SortDashboard = () => {
     }, [algorithm])
 
     useEffect(() => {
-        generateArray();
+        if (algorithm === 'binary') {
+            generateArray(true);
+        } else {
+            generateArray();
+        }
+        
         setShuffle(false);
     }, [shuffle])
 

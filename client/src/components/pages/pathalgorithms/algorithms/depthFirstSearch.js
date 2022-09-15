@@ -2,8 +2,11 @@ import { constructGrid2D } from "./helpers/constructGrid2D";
 import { findNeighbours } from './helpers/findNeighbours';
 import { mapTo2D } from "./helpers/pointTo2D";
 
+import { convertToGrid } from "./helpers/convertToGrid";
+import promiseTimeout from "../../../../helpers/promiseTimeout";
 
-const depthFirstSearch = async (grid, rowCount, columnCount, start, finish) => {
+
+const depthFirstSearch = async (grid, rowCount, columnCount, start, finish, setMatrix) => {
     let finished = false;
     const [, grid2D] = constructGrid2D(grid, rowCount, columnCount);
     const [startRow, startCol] = mapTo2D(start, rowCount, columnCount);
@@ -29,6 +32,9 @@ const depthFirstSearch = async (grid, rowCount, columnCount, start, finish) => {
             continue;    
         }
         grid2D[currentCell[0]][currentCell[1]].visited = true;
+        setMatrix(convertToGrid(grid2D));
+        await promiseTimeout({timeout: 100});
+
         const neighbouringcells = getValidNeighbours(findNeighbours(currentCell[0], currentCell[1], rowCount, columnCount));
 
         for (const coordinate of neighbouringcells) {
@@ -54,6 +60,9 @@ const depthFirstSearch = async (grid, rowCount, columnCount, start, finish) => {
     while (pathStop.weight !== 0 && pathStop.visited) {
         shortestPath.push(pathStop.previousNode);
         grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]].onShortestPath = true;
+        setMatrix(convertToGrid(grid2D));
+        await promiseTimeout({timeout: 100});
+        
         pathStop = grid2D[pathStop.previousNode[0]][pathStop.previousNode[1]];
     }
 

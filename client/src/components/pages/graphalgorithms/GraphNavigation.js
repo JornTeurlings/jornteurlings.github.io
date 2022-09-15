@@ -1,5 +1,5 @@
 
-const SortNavigation = (props) => {
+const GraphNavigation = (props) => {
     const onRunClick = () => {
         props.onAlgorithmRunClick();
     }
@@ -9,7 +9,7 @@ const SortNavigation = (props) => {
     }
 
     return (
-        <div className="m-auto my-3 d-flex w-50 justify-content-space-around navigation-path-algorithm">
+        <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
                 <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
                 <select onChange={() => props.setAlgorithm((document.getElementById('select-sort-algorithm')).value)} id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="binary" disabled={props.disabled}>
@@ -25,7 +25,7 @@ const SortNavigation = (props) => {
             <button onClick={onRunClick} disabled={props.disabled} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>
             {/* <button className="btn btn-warning mx-3" type="button">Example Grid</button> */}
             <button onClick={onShuffleClick} disabled={props.disabled} className="btn reset-path-algorithm mx-3" type="button">Shuffle Data</button>
-            <div>
+            {/* <div>
                 <label for="visualization-speed" className="form-label" style={{color: 'white'}}>Visualization Speed</label>
                 <input 
                 onChange={() => props.setSpeed(document.getElementById('visualization-speed').value)} 
@@ -36,10 +36,10 @@ const SortNavigation = (props) => {
                 className="form-range custom-range-slider" 
                 type="range"
                 />
-            </div>
+            </div> */}
         </div>
     )
 
 }
 
-export default SortNavigation;
+export default GraphNavigation;

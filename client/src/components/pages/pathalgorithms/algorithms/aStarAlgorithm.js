@@ -2,6 +2,8 @@ import { constructGrid2D } from "./helpers/constructGrid2D";
 import { findNeighbours } from './helpers/findNeighbours';
 import { heuristicFunctionAStar } from "./helpers/heuristicFunction";
 import { mapTo2D } from "./helpers/pointTo2D";
+import { convertToGrid } from "./helpers/convertToGrid";
+import promiseTimeout from "../../../../helpers/promiseTimeout";
 
 const GRIDCOST = 1;
 
@@ -21,7 +23,7 @@ const findMinNode = (openList) => {
 
 
 
-const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setGrid) => {
+const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setMatrix) => {
     const [, grid2D] = constructGrid2D(grid, rowCount, columnCount);
     const [startRow, startCol] = mapTo2D(start, rowCount, columnCount);
     const [finalRow, finalCol] = mapTo2D(finish, rowCount, columnCount); 
@@ -39,6 +41,10 @@ const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setGri
         const currentCell = JSON.parse(findMinNode(openList));
         const stringedCell = JSON.stringify(currentCell);
         grid2D[currentCell[0]][currentCell[1]].visited = true;
+
+        setMatrix(convertToGrid(grid2D));
+        await promiseTimeout({timeout: 100});
+
         const currentCellInfo = openList.get(stringedCell);
         openList.delete(stringedCell);
         closedList.set(stringedCell, currentCellInfo);
@@ -76,6 +82,9 @@ const aStarAlgorithm = async (grid, rowCount, columnCount, start, finish, setGri
     while (!(currentTraceCell[0] === startRow && currentTraceCell[1] === startCol)) {
         let previousNode = (closedList.get(JSON.stringify(currentTraceCell))).parent;
         grid2D[currentTraceCell[0]][currentTraceCell[1]].onShortestPath = true;
+        setMatrix(convertToGrid(grid2D));
+        await promiseTimeout({timeout: 100});
+        
         currentTraceCell = previousNode;
     }
 
