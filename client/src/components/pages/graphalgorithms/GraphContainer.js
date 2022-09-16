@@ -1,114 +1,95 @@
 import Graph from 'react-graph-vis';
-import { useEffect, useState } from 'react';
-import GraphDashboard from './GraphDashboard';
+import TableGraph from './TableGraph';
 
 const options = {
     layout: {
       hierarchical: false
     },
     edges: {
-      color: "#000000"
+      arrows: {
+        to: {
+          type: 'triangle'
+        },
+        from: {
+          type: 'triangle'
+        }
+      },
+      color:  {
+        color: "#484b6a",
+        hover: "#6f74a1"
+      },
+      font : {
+        strokeWidth: 5,
+        size:20
+      },
+      smooth: {
+        enabled:true
+      },
+      length: 250,
+      hoverWidth: 2,
+      width: 1.5,
+    },
+    nodes: {
+      shape: 'square',
+      color: {
+        background: '#0D7377',
+        border: '#0D7377',
+        hover: {
+          background: '#13A8AD',
+          border: '#0D7377',
+        },
+        highlight: {
+          background: '#3ad3d8',
+          border: '#0D7377'
+        }
+      },
+      font : {
+        color: '#000000',
+        size: 30
+      }
     },
     interaction: {
-        zoomView: false,
+      zoomView: false,
+      hover:true
     },
     manipulation: {
-        enabled: true,
-        addNode: true,
-        addEdge:true,
+      enabled: true,
+      editNode: (nodeData, callback) => {
+
+      }
+    },
+    physics: {
+      enabled: true,
+      stabilization: false,
+      barnesHut: {
+        theta: 0.5,
+        gravitationalConstant: -2000,
+        centralGravity: 0.3,
+        springLength: 150,
+        springConstant: 0.008,
+        damping: 0.09,
+        avoidOverlap: 1
+      },
+      solver: 'barnesHut'
     }
   };
   
-const randomColor = () => {
-    const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-
-    return `#${red}${green}${blue}`;
-}
-
 
 const GraphContainer = (props) => {
-    const createNode = (x, y) => {
-        const color = randomColor();
-        setGraphState(({ graph: { nodes, edges }, counter, ...rest }) => {
-          const id = counter + 1;
-          const from = Math.floor(Math.random() * (counter - 1)) + 1;
-          return {
-            graph: {
-              nodes: [
-                ...nodes,
-                { id, label: `${id}`, x, y, font: {size:20} }
-              ],
-              edges: [
-                ...edges,
-                { from, to: id }
-              ]
-            },
-            counter: id,
-            ...rest
-          }
-        });
-    }
-
-    const [graphState, setGraphState] = useState({
-        counter: 15,
-        graph: {
-            nodes: new Array(10).fill(null).map((_, i) => ({id: i + 1, label: `${i + 1}`, font: { size: 20}})),
-            edges: []
-        },
-        events: {
-            select: ({ nodes, edges }) => {
-
-        },
-        doubleClick: ({ pointer: { canvas } }) => {
-            createNode(canvas.x, canvas.y);
-        }
-        }
-    })
-
-    const { graph, events } = graphState;
-
-    useEffect(() => {
-        let newEdges = [];
-        graph.nodes.forEach((value) => {
-            const randomAmountEdges = Math.floor(Math.random() * (1 + 1) + 1);
-            let newArray = new Array(randomAmountEdges).fill(0).map((_, i) => (
-                {
-                    from: value.id, 
-                    to: Math.floor(Math.random() * graph.nodes.length),
-                    weight: Math.floor(Math.random() * 10),
-                }
-            ))
-
-            newEdges = newEdges.concat(newArray);
-        });
-
-        setGraphState(({ graph: { nodes, edges },...rest }) => {
-            return {
-                graph: {
-                  nodes: [
-                    ...nodes,
-                  ],
-                  edges: newEdges,
-                },
-                ...rest
-              };
-        });
-
-    }, []);
-
     return (
         <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1">
-            <div  className="col-md-9 d-flex flex-wrap bar-chart-sort justify-content-center">
-            <Graph
-                graph={graph}
+            <div className="col-md-9 d-flex">
+              <Graph
+                graph={props.graph}
                 options={options}
-                events={events}
-                getNetwork={network => {
-                    //  if you want access to vis.js network api you can set the state in a parent component using this property
+                events={props.events}
+                getNetwork={(network) => {
+                  props.setNetwork(network);
                 }}
-            />
+              />
+              <TableGraph
+                information={props.nodeInformation} 
+              />
             </div>
         </div>
     )

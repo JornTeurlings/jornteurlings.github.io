@@ -1,7 +1,7 @@
 
 const GraphNavigation = (props) => {
     const onRunClick = () => {
-        props.onAlgorithmRunClick();
+        props.onAlgorithmRunClick('dijkstra');
     }
 
     const onShuffleClick = () => {
