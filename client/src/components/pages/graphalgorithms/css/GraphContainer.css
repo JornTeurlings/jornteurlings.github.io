@@ -1,0 +1,29 @@
+div.graph-container-styling div.vis-separator-line {
+    display:none !important;
+}
+
+div.vis-manipulation {
+    border:none !important;
+    height: auto !important;
+}
+
+button.vis-button {
+    background-color: transparent;
+    text-align:left;
+    margin: 0px 5px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border-width: 0px;
+    background-color: #484b6a;
+    border-color: #6f74a1 !important;
+    color:white;
+    transition: all 0.2s ease-in-out
+}
+
+button.vis-button:hover {
+    background-color: #6f74a1;
+}
+
+button.vis-button div.vis-label{
+    margin: 0px !important;
+}

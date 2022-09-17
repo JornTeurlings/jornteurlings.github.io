@@ -87,7 +87,7 @@ const GraphDashboard = () => {
         counter: 7,
         graph: {
             nodes: new Array(7).fill(null).map((_, i) => ({id: i + 1, label: selectAlphabet(i + 1), title: `Node ${i+1}`})),
-            edges: []
+            edges: [],
         },
         events: {
             select: ({ nodes, edges }) => {
@@ -95,7 +95,7 @@ const GraphDashboard = () => {
             },
             doubleClick: ({ pointer: { canvas } }) => {
                 createNode(canvas.x, canvas.y);
-            }
+            },
         }
     })
     const { graph, events } = graphState;
@@ -132,6 +132,35 @@ const GraphDashboard = () => {
         });
     }
 
+    const addEdgeCalback = (edgeData, callback) => {
+        console.log('here');
+        let edgeChangeData = edgeData;
+        if (algorithm === 'bellman') {
+            let weight = Math.floor(Math.random() * 15) - 2;
+            edgeChangeData.weight = weight
+            edgeChangeData.label = `${weight}`
+        } else {
+            let weight = Math.floor(Math.random() * 10) + 1;
+            edgeChangeData.weight = weight
+            edgeChangeData.label = `${weight}`
+        }
+
+        setGraphState(({ graph: { nodes, edges }, ...rest }) => {
+            return {
+              graph: {
+                nodes: [
+                  ...nodes
+                ],
+                edges: [
+                  ...edges,
+                  edgeChangeData
+                ]
+              },
+              ...rest
+            }
+        })
+    }
+
     const onAlgorithmRunClick = async () => {
         setActiveAlgorithm(true);
         await runAlgorithm(graphState, algorithm, setActiveSelection, setNodeInformation, startingNode, 1000);
@@ -160,7 +189,7 @@ const GraphDashboard = () => {
     return (
         <div className="col-md-12 d-flex  flex-column m-auto h-100">
             <GraphNavigation setAlgorithm={setAlgorithm} onAlgorithmRunClick={onAlgorithmRunClick}/>
-            <GraphContainer startingNode={startingNode} nodeInformation={nodeInformation} setNetwork={setNetwork} graph={graph} events={events}/>
+            <GraphContainer setNewEdge={addEdgeCalback} startingNode={startingNode} nodeInformation={nodeInformation} setNetwork={setNetwork} graph={graph} events={events}/>
         </div>
     )
 }

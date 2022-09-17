@@ -1,3 +1,4 @@
+import './css/GraphContainer.css';
 import Graph from 'react-graph-vis';
 import TableGraph from './TableGraph';
 
@@ -55,9 +56,7 @@ const options = {
     },
     manipulation: {
       enabled: true,
-      editNode: (nodeData, callback) => {
-
-      }
+      addEdge: true,
     },
     physics: {
       enabled: true,
@@ -77,8 +76,10 @@ const options = {
   
 
 const GraphContainer = (props) => {
+    options.manipulation.addEdge = props.setNewEdge;
+    
     return (
-        <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1">
+        <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
             <div className="col-md-9 d-flex">
               <Graph
                 graph={props.graph}
