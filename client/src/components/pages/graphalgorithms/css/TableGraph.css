@@ -1,5 +1,5 @@
 .table-graph {
-    background-color:white;
+    background-color:#6f74a1;
     border-radius: 5px;
     padding: 10px;
     border: 2px solid #6f74a1;
@@ -18,7 +18,7 @@
 
 .cell-area {
     padding: 5px 10px;
-    color:#6f74a1;
+    color:white;
 }
 
 .cell-area.origin{

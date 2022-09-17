@@ -7,8 +7,8 @@ const TableGraph = (props) => {
             return props.information.map(node => (
                 <tr className="">
                     <td className="align-center cell-area origin">{selectAlphabet(node.node)}</td>
-                    <td className="align-center cell-area distance">{node.distance === Number.MAX_SAFE_INTEGER ? '∞' : node.distance}</td>
-                    <td className="align-center cell-area previous">{node.distance === 0 ? "Start" : selectAlphabet(node.previous)}</td>
+                    <td className="align-center cell-area distance">{node.distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : node.distance}</td>
+                    <td className="align-center cell-area previous">{node.node === props.start ? "Start" : selectAlphabet(node.previous)}</td>
                 </tr>
             ))
     }

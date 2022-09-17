@@ -12,8 +12,9 @@ const GraphNavigation = (props) => {
         <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
                 <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
-                <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select" defaultValue="binary" disabled={props.disabled}>
-                    <option value="merge">Dijkstra's Algorithm</option>
+                <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select" defaultValue="bellman" disabled={props.disabled}>
+                    <option value="dijkstra">Dijkstra's Algorithm</option>
+                    <option value="bellman">Belmann-Ford Algorithm</option>
                 </select>
             </div>
             <button onClick={onRunClick} disabled={props.disabled} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>

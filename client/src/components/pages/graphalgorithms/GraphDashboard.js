@@ -6,11 +6,16 @@ import { useState, useEffect, useRef } from 'react';
 import dijkstraAlgorithm from './algorithms/dijkstraAlgorithm';
 import { randomColor } from '../../../helpers/randomColor';
 import { selectAlphabet } from '../../../helpers/selectAlphabet';
+import bellmanFordAlgorithm from './algorithms/bellmanFordAlgorithm';
 
 const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed) => {
     switch (algorithm) {
         case 'dijkstra': {
             await dijkstraAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed);
+            break;
+        }
+        case 'bellman': {
+            await bellmanFordAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed);
             break;
         }
         default:
@@ -40,11 +45,42 @@ const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInforma
 
 let network;
 
+const generateEdges = (nodes, algorithm) => {
+    let newEdges = []
+    nodes.forEach((value) => {
+        const randomAmountEdges = Math.floor(Math.random() * 1) + 2;
+        let alreadyAdded = [];
+        let newArray = new Array(randomAmountEdges).fill(0).map((_, i) => {
+            let to = value.id;
+            while (to === value.id || alreadyAdded.includes(to)) {
+                to = Math.floor(Math.random() * nodes.length) + 1;
+            }
+            alreadyAdded.push(to);
+            let weight;
+            if (algorithm === 'bellman') {
+                weight = Math.floor(Math.random() * 15) - 2;
+            } else {
+                weight = Math.floor(Math.random() * 10) + 1;
+            }
+            
+            return {
+                from: value.id, 
+                to: to,
+                weight: weight,
+                label: `${weight}`
+            }
+    })
+
+        newEdges = newEdges.concat(newArray);
+    });
+    return newEdges;
+}
+
 const GraphDashboard = () => {
     const [startingNode, setStartingNode] = useState(3);
     const [activeAlgorithm, setActiveAlgorithm] = useState(false);
     const [nodeInformation, setNodeInformation] = useState({});
-    const [algorithm, setAlgorithm] = useState('dijkstra');
+    const [algorithm, setAlgorithm] = useState('bellman');
     const [activeSelection, setActiveSelection] = useState({nodes: [], edges: []})
     const [network, setNetwork] = useState({});
     const [graphState, setGraphState] = useState({
@@ -105,25 +141,7 @@ const GraphDashboard = () => {
 
     useEffect(() => {
         let newEdges = [];
-        graph.nodes.forEach((value) => {
-            const randomAmountEdges = Math.floor(Math.random() * 1) + 2;
-            let newArray = new Array(randomAmountEdges).fill(0).map((_, i) => {
-                let to = value.id;
-                while (to === value.id) {
-                    to = Math.floor(Math.random() * graph.nodes.length) + 1;
-                }
-                const weight = Math.floor(Math.random() * 10) + 1;
-                return {
-                    from: value.id, 
-                    to: to,
-                    weight: weight,
-                    label: `${weight}`
-                }
-        })
-
-            newEdges = newEdges.concat(newArray);
-        });
-
+        newEdges = generateEdges(graph.nodes, algorithm);
         setGraphState(({ graph: { nodes, edges },...rest }) => {
             return {
                 graph: {
@@ -136,13 +154,13 @@ const GraphDashboard = () => {
               };
         });
 
-    }, []);
+    }, [algorithm]);
 
 
     return (
         <div className="col-md-12 d-flex  flex-column m-auto h-100">
             <GraphNavigation setAlgorithm={setAlgorithm} onAlgorithmRunClick={onAlgorithmRunClick}/>
-            <GraphContainer nodeInformation={nodeInformation} setNetwork={setNetwork} graph={graph} events={events}/>
+            <GraphContainer startingNode={startingNode} nodeInformation={nodeInformation} setNetwork={setNetwork} graph={graph} events={events}/>
         </div>
     )
 }

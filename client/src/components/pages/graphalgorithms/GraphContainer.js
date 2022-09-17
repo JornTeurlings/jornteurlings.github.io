@@ -3,7 +3,8 @@ import TableGraph from './TableGraph';
 
 const options = {
     layout: {
-      hierarchical: false
+      hierarchical: false,
+      improvedLayout:true
     },
     edges: {
       arrows: {
@@ -32,15 +33,15 @@ const options = {
     nodes: {
       shape: 'square',
       color: {
-        background: '#0D7377',
+        background: '#6f74a1',
         border: '#0D7377',
         hover: {
           background: '#13A8AD',
-          border: '#0D7377',
+          border: '#6f74a1',
         },
         highlight: {
           background: '#3ad3d8',
-          border: '#0D7377'
+          border: '#6f74a1'
         }
       },
       font : {
@@ -89,6 +90,7 @@ const GraphContainer = (props) => {
               />
               <TableGraph
                 information={props.nodeInformation} 
+                start={props.startingNode}
               />
             </div>
         </div>
