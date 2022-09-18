@@ -101,6 +101,7 @@ const GraphContainer = (props) => {
               <div className='col-md-3'>
               <TableGraph
                 algorithm={props.algorithm}
+                active={props.disabled}
                 activeSelection={props.activeSelection}
                 information={props.nodeInformation} 
                 start={props.startingNode}

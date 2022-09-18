@@ -1,9 +1,8 @@
 import { NodeTypes } from './types';
 import promiseTimeout from '../../../../helpers/promiseTimeout';
+
 const createNodes = (nodes, type) => {
     let newObj = {};
-
-
     nodes.forEach((elem, i) => {
         newObj[elem.id] = {node: elem.id, distance: Number.MAX_SAFE_INTEGER, previous: undefined}
     });
@@ -15,7 +14,7 @@ const createNodes = (nodes, type) => {
 const findIndexMinimum = (information, unvisited) => {
     let min = null;
     let minValue = Number.MAX_SAFE_INTEGER;
-    Object.values(information).map((node) => {
+    Object.values(information).forEach((node) => {
         if (node.distance < minValue && unvisited.includes(node.node)) {
             min = node.node;
             minValue = node.distance;
@@ -63,11 +62,7 @@ const dijkstraAlgorithm = async (graph, setGraph, setNodeInformation, startingPo
                 nodeInformation[neighbour.to].previous = information.node;
             }
         }
-        if (i === 7) break;
-        i++;
     }
-
-    console.log("All paths have been found: ", nodeInformation);
     
 }
 

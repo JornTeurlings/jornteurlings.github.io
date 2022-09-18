@@ -14,9 +14,9 @@ const SortNavigation = (props) => {
     }, [])
 
     return (
-        <div className="m-auto my-3 d-flex w-50 justify-content-space-around navigation-path-algorithm">
+        <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
-                <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
+                <p className="m-auto nav-path-algorithm-text">Algorithm: </p>
                 <select onChange={() => props.setAlgorithm((document.getElementById('select-sort-algorithm')).value)} id="select-sort-algorithm" className="mx-3 custom-algorithm-select" defaultValue="merge" disabled={props.disabled}>
                     <option value="merge">Merge Sort</option>
                     <option value="selection">Selection Sort</option>

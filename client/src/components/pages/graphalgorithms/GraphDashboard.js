@@ -217,6 +217,7 @@ const GraphDashboard = () => {
                 ...rest
               };
         });
+        setNodeInformation({});
 
     }, [algorithm]);
 

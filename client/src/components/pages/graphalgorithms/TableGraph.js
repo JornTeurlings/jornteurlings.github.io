@@ -1,19 +1,22 @@
 import './css/TableGraph.css';
 import { selectAlphabet } from '../../../helpers/selectAlphabet';
+import { useEffect, useState } from 'react';
 
 const TableGraph = (props) => {
-
+    const [update, setUpdate] = useState(props.active);
     const renderContent = () => {
         if (props.algorithm === 'floyd') {
-            return props.information.map((node, i) => (
-                <tr className="">
-                    <td className={`align-center cell-area origin ${props.activeSelection.nodes[1] === i + 1 ? 'active' : ''}`}>{selectAlphabet(i + 1)}</td>
-                    {node.map((distance) => <td className={`cell-area`}>{distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : distance}</td>)}
-                </tr>
-            ))
+            console.log(props.information);
+            if(typeof props.information[0] === Array) {
+                return props.information.map((node, i) => (
+                    <tr className="">
+                        <td className={`align-center cell-area origin ${props.activeSelection.nodes[1] === i + 1 ? 'active' : ''}`}>{selectAlphabet(i + 1)}</td>
+                        {node.map((distance) => <td className={`cell-area`}>{distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : distance}</td>)}
+                    </tr>
+                ))
+            }
         } else {
             return props.information.map(node => {
-                console.log(node)
                 if (props.algorithm === 'prim') {
                     return (
                         <tr className="">
@@ -63,24 +66,11 @@ const TableGraph = (props) => {
 
     const renderTable = () => {
         if (Object.keys(props.information).length > 0) {
-            if (props.algorithm === 'floyd') {
-                return (
-                    <>
-                        <tbody>
-                            {renderContent()}
-                        </tbody>
-                    </>
-                );
-            } else {
-                return (
-                    <>
-
-                        <tbody>
-                            {renderContent()}
-                        </tbody>
-                    </>
-                );   
-            }
+            return (
+                <tbody>
+                    {renderContent()}
+                </tbody>
+            );   
         }
     }
 

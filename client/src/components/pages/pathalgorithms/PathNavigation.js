@@ -13,7 +13,7 @@ const PathNavigation = (props) => {
     return (
         <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
             <div className='d-flex'>
-                <p className="m-auto nav-path-algorithm-text">Select an Algorithm: </p>
+                <p className="m-auto nav-path-algorithm-text">Algorithm: </p>
                 <select disabled={props.active} id="select-path-algorithm" className="mx-3 custom-algorithm-select" defaultValue="dijkstra">
                     <option value="dijkstra">Dijkstra's Algorithm</option>
                     <option value="astar">A* Algorithm</option>
