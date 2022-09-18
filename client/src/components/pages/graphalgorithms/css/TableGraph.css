@@ -19,8 +19,18 @@
 .cell-area {
     padding: 5px 10px;
     color:white;
+    font-weight:bold;
 }
 
 .cell-area.origin{
     border-right: 1px solid white;
+}
+
+.cell-area.active {
+    background-color: aqua;
+}
+
+.pivot {
+    background-color: #0D7377 !important;
+    color:white;
 }

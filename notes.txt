@@ -2,11 +2,8 @@ Algorithm App:
 
 	Algorithms:
 		SHORTEST PATH:
-			- Dijkstra
-			- Bellman-Ford
 			- Depth First Search
 			- A* search algorithm
-			- Floyd-Warshall algorithm
 			- Johnsons's algorithm
 			- Viterbi Algorithm
 			- Lee Algorithm
@@ -14,7 +11,6 @@ Algorithm App:
 		GRAPH TRAVERSAL:
 			- Breadth First Search
 			- Kruskal's Algorithm
-			- Prim's Algorithm
 			- Flood Fill Algorithm
 			- Wave Propagation
 

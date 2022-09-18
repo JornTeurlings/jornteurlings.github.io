@@ -1,6 +1,7 @@
 import './css/GraphContainer.css';
 import Graph from 'react-graph-vis';
 import TableGraph from './TableGraph';
+import { useEffect } from 'react';
 
 const options = {
     layout: {
@@ -76,23 +77,35 @@ const options = {
   
 
 const GraphContainer = (props) => {
-    options.manipulation.addEdge = props.setNewEdge;
-    
-    return (
-        <div id="content-height" className="my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
+    useEffect(() => {
+      if (props.disabled) {
+        document.querySelector('.vis-edit-mode').style.display = 'none';
+      } else {
+        document.querySelector('.vis-edit-mode').style.display = 'block';
+      }
+    }, [props.disabled])
+
+    return ( 
+        <div id="content-height" className="my-5 d-flex justify-content-space-between flex-grow-1 graph-container-styling">
             <div className="col-md-9 d-flex">
-              <Graph
-                graph={props.graph}
-                options={options}
-                events={props.events}
-                getNetwork={(network) => {
-                  props.setNetwork(network);
-                }}
-              />
+              <div className="col-md-9">
+                <Graph
+                  graph={props.graph}
+                  options={options}
+                  events={props.events}
+                  getNetwork={(network) => {
+                    props.setNetwork(network);
+                  }}
+                />
+              </div>
+              <div className='col-md-3'>
               <TableGraph
+                algorithm={props.algorithm}
+                activeSelection={props.activeSelection}
                 information={props.nodeInformation} 
                 start={props.startingNode}
               />
+              </div>
             </div>
         </div>
     )
