@@ -15,6 +15,7 @@ const bubbleSort = async (start, end, setArray, setColorsArray, visualizationSpe
             if (arr[i] > arr[i + 1]) {
                 swap(i, i + 1, arr);
                 setArray(arr);
+                await promiseTimeout({timeout: visualizationSpeed});
             }
         }
     }

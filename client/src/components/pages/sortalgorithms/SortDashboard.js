@@ -1,5 +1,13 @@
 import './css/SortDashboard.css';
 
+import SortingInformation from './information/SortingInformation';
+import MergeSortInformation from './information/MergeSortInformation';
+import SelectionSortInformation from './information/SelectionSortInformation';
+import BubbleSortInformation from './information/BubbleSortInformation';
+import InsertionSortInformation from './information/InsertionSortInformation';
+import QuickSortInformation from './information/QuickSortInformation';
+import CountingSortInformation from './information/CountingSortInformation';
+
 import mergeSortWrapper from './algorithms/mergeSort';
 import selectionSortWrapper from './algorithms/selectionSort';
 import bubbleSortWrapper from './algorithms/bubbleSort';
@@ -11,6 +19,29 @@ import SortNavigation from "./SortNavigation";
 import SortGridContainer from "./SortGridContainer";
 import { useState, useEffect } from 'react';
 import binarySearchWrapper from './algorithms/binarySearchAlgorithm';
+import InfoModal from '../../components/InfoModal';
+import BinarySearchInformation from './information/BinarySearchInformation';
+
+const selectAlgorithmInformation = (algorithm) => {
+    switch (algorithm) {
+        case 'merge':
+            return <MergeSortInformation />
+        case 'selection':
+            return <SelectionSortInformation />
+        case 'bubble':
+            return <BubbleSortInformation />
+        case 'insertion':
+            return <InsertionSortInformation />
+        case 'quick':
+            return <QuickSortInformation />
+        case 'binary':
+            return <BinarySearchInformation />
+        case 'counting':
+            return <CountingSortInformation />
+        default:
+            break;
+    }
+}
 
 const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray, visualizationSpeed, searchValue = 0) => {
     visualizationSpeed = (200) / (2 ** visualizationSpeed)
@@ -44,6 +75,7 @@ const runAlgorithm = async (array, algorithm = 'merge', setArray, setColorsArray
 const SortDashboard = () => {
     const [shuffle, setShuffle] = useState(false);
     const [currentArray, setCurrentArray] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const [colorsArray, setColorsArray] = useState([]);
     const [searchValue, setSearchValue] = useState(null);
     const [algorithm, setAlgorithm] = useState(null);
@@ -102,17 +134,26 @@ const SortDashboard = () => {
             <SortNavigation 
             disabled={algorithmRunning} 
             setSpeed={setSpeed} 
+            setShowModal={setShowModal}
             setAlgorithm={setAlgorithm}
             setShuffle={setShuffle}
             onAlgorithmRunClick={onAlgorithmRunClick}
             />
             <SortGridContainer 
             setSearchValue={setSearchValue} 
+            searchValue={searchValue}
+            algorithm={algorithm}
             array={currentArray} 
             colorsArray={colorsArray} 
             setArray={setCurrentArray} 
             shuffle={shuffle} 
             setShuffle={setShuffle}
+            />
+            <InfoModal 
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+                infoCurrentPage={<SortingInformation />}
+                infoCurrentAlgorithm={selectAlgorithmInformation(algorithm)}
             />
         </div>
     )

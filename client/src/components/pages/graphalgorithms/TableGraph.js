@@ -6,20 +6,19 @@ const TableGraph = (props) => {
     const [update, setUpdate] = useState(props.active);
     const renderContent = () => {
         if (props.algorithm === 'floyd') {
-            console.log(props.information);
-            if(typeof props.information[0] === Array) {
+            if(props.information[0] instanceof Array) {
                 return props.information.map((node, i) => (
-                    <tr className="">
+                    <tr key={i} className="">
                         <td className={`align-center cell-area origin ${props.activeSelection.nodes[1] === i + 1 ? 'active' : ''}`}>{selectAlphabet(i + 1)}</td>
-                        {node.map((distance) => <td className={`cell-area`}>{distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : distance}</td>)}
+                        {node.map((distance, j) => <td key={`${i}-${j}`} className={`cell-area`}>{distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : distance}</td>)}
                     </tr>
                 ))
             }
         } else {
-            return props.information.map(node => {
+            return props.information.map((node, i) => {
                 if (props.algorithm === 'prim') {
                     return (
-                        <tr className="">
+                        <tr key={i} className="">
                             <td className="align-center cell-area origin">{selectAlphabet(node.node)}</td>
                             <td className="align-center cell-area distance">{node.cost > Number.MAX_SAFE_INTEGER - 100 ? '∞' : node.cost}</td>
                             <td className="align-center cell-area previous">{node.inTree ? "In Set" :"Not in Set"}</td>
@@ -27,7 +26,7 @@ const TableGraph = (props) => {
                     )
                 } else {
                     return (
-                        <tr className="">
+                        <tr key={i} className="">
                             <td className="align-center cell-area origin">{selectAlphabet(node.node)}</td>
                             <td className="align-center cell-area distance">{node.distance > Number.MAX_SAFE_INTEGER - 100 ? '∞' : node.distance}</td>
                             <td className="align-center cell-area previous">{node.node === props.start ? "Start" : selectAlphabet(node.previous)}</td>
@@ -46,7 +45,7 @@ const TableGraph = (props) => {
                     <thead>
                         <tr>
                             <th className="pivot">{selectAlphabet(props.activeSelection.nodes[0])}</th>
-                            {props.information.map((node, i) => <th className={`cell-area ${props.activeSelection.nodes[2] === i + 1 ? 'active' : ''}`} >{selectAlphabet(i + 1)}</th>)}
+                            {props.information.map((node, i) => <th key={i} className={`cell-area ${props.activeSelection.nodes[2] === i + 1 ? 'active' : ''}`} >{selectAlphabet(i + 1)}</th>)}
                         </tr>
                     </thead>
                 )

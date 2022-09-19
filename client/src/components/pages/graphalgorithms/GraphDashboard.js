@@ -10,9 +10,16 @@ import primAlgorithm from './algorithms/primAlgorithm';
 
 import { randomColor } from '../../../helpers/randomColor';
 import { selectAlphabet } from '../../../helpers/selectAlphabet';
+import InfoModal from '../../components/InfoModal';
+import GraphInformation from './information/GraphInformation';
+import DijkstraInformation from './information/DijkstraInformation';
+import BellmanInformation from './information/BellmanInformation';
+import FloydInformation from './information/FloydInformation';
+import PrimInformation from './information/PrimInformation';
 
 
 const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph) => {
+    visualizationSpeed = (200) / (0.5 * visualizationSpeed);
     switch (algorithm) {
         case 'dijkstra': {
             await dijkstraAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed);
@@ -55,6 +62,21 @@ const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInforma
 //     return element;
 // }
 
+
+const selectAlgorithmInformation = (algorithm) => {
+    switch (algorithm) {
+        case 'dijkstra':
+            return <DijkstraInformation />;
+        case 'bellman':
+            return <BellmanInformation />;
+        case 'floyd':
+            return <FloydInformation />;
+        case 'prim':
+            return <PrimInformation />;
+        default:
+            break;
+    }
+}
 let network;
 
 const generateEdges = (nodes, algorithm) => {
@@ -114,6 +136,9 @@ const generateEdges = (nodes, algorithm) => {
 
 const GraphDashboard = () => {
     const [startingNode, setStartingNode] = useState(3);
+    const [speed, setSpeed] = useState(3);
+    const [showModal, setShowModal] = useState(false);
+    const [shuffle, setShuffle] = useState(false);
     const [activeAlgorithm, setActiveAlgorithm] = useState(false);
     const [nodeInformation, setNodeInformation] = useState({});
     const [algorithm, setAlgorithm] = useState('prim');
@@ -198,7 +223,7 @@ const GraphDashboard = () => {
 
     const onAlgorithmRunClick = async () => {
         setActiveAlgorithm(true);
-        await runAlgorithm(graphState, algorithm, setActiveSelection, setNodeInformation, startingNode, 1000, setGraphState);
+        await runAlgorithm(graphState, algorithm, setActiveSelection, setNodeInformation, startingNode, speed, setGraphState);
         setActiveAlgorithm(false);
     }
 
@@ -218,13 +243,20 @@ const GraphDashboard = () => {
               };
         });
         setNodeInformation({});
-
-    }, [algorithm]);
+        setShuffle(false);
+    }, [algorithm, shuffle]);
 
 
     return (
-        <div className="col-md-9 d-flex  flex-column m-auto h-100">
-            <GraphNavigation setAlgorithm={setAlgorithm} disabled={activeAlgorithm} onAlgorithmRunClick={onAlgorithmRunClick}/>
+        <div className="col-md-12 d-flex  flex-column m-auto h-100">
+            <GraphNavigation 
+            setSpeed={setSpeed}
+            setAlgorithm={setAlgorithm} 
+            setShuffle={setShuffle} 
+            disabled={activeAlgorithm} 
+            setShowModal={setShowModal} 
+            onAlgorithmRunClick={onAlgorithmRunClick}
+            />
             <GraphContainer 
                 setNewEdge={addEdgeCalback}
                 startingNode={startingNode} 
@@ -236,6 +268,12 @@ const GraphDashboard = () => {
                 graph={graph} 
                 events={events}
                 />
+            <InfoModal 
+                show={showModal}
+                handleClose={() => setShowModal(false)}
+                infoCurrentPage={<GraphInformation/>}
+                infoCurrentAlgorithm={selectAlgorithmInformation(algorithm)}
+            />
         </div>
     )
 }

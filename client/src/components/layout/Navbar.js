@@ -30,7 +30,7 @@ const Navbar = () => {
                         >Network/Graph Algorithms
                         </NavLink>
                     </li>
-                    <li className='nav-item'>
+                    {/* <li className='nav-item'>
                         <NavLink 
                         to="/dynamic-programming"
                         className="nav-item-custom"
@@ -43,7 +43,7 @@ const Navbar = () => {
                         className="nav-item-custom"
                         >Data Algorithms
                         </NavLink>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </nav>

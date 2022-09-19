@@ -32,7 +32,6 @@ const floydWarshallAlgorithm = async (graph, setGraph, setNodeInformation, visua
             }
         }
     }
-    console.log(nodeInformation);
 }
 
 export default floydWarshallAlgorithm;

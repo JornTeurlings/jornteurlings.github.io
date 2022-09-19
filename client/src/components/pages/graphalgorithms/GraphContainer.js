@@ -77,6 +77,8 @@ const options = {
   
 
 const GraphContainer = (props) => {
+    options.manipulation.addEdge = props.setNewEdge;
+
     useEffect(() => {
       if (props.disabled) {
         document.querySelector('.vis-edit-mode').style.display = 'none';
@@ -86,7 +88,7 @@ const GraphContainer = (props) => {
     }, [props.disabled])
 
     return ( 
-        <div id="content-height" className="my-5 d-flex justify-content-space-between flex-grow-1 graph-container-styling">
+        <div id="content-height" className="col-md-9  m-auto my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
             <div className="col-md-9 d-flex">
               <div className="col-md-9">
                 <Graph

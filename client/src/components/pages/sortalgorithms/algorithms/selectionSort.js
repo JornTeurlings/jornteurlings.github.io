@@ -6,6 +6,8 @@ let arr = []
 const selectionSort = async (start, end, setArray, setColorsArray, visualizationSpeed) => {
     let newColorsArray = [];
     for (let i = start; i <= end; i++) {
+        let minIndex = i;
+        let minValue = Number.MAX_SAFE_INTEGER;
         for (let j = i; j <= end; j++) {
             newColorsArray = new Array(arr.length).fill(0);
             newColorsArray[i] = 1;
@@ -13,11 +15,14 @@ const selectionSort = async (start, end, setArray, setColorsArray, visualization
             setColorsArray(newColorsArray);
             await promiseTimeout({timeout: visualizationSpeed});
 
-            if (arr[j] < arr[i]) {
-                swap(i, j, arr);
+            if (arr[j] < minValue) {
+                minValue = arr[j];
+                minIndex = j;
             }
         }
+        swap(i, minIndex, arr);
         setArray(arr);
+        await promiseTimeout({timeout: visualizationSpeed});
     }
 
 }

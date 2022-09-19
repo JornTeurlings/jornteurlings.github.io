@@ -7,6 +7,8 @@
 .run-path-algorithm {
     background-color: #3ad3d8;
     color:white !important;
+    height:fit-content;
+    margin:auto;
 }
 
 .run-path-algorithm:hover {
@@ -17,6 +19,29 @@
 .reset-path-algorithm {
     background-color: #13A8AD;
     color:white !important;
+    height:fit-content;
+    margin:auto;
+}
+
+.info-button {
+    border: 2px solid white;
+    border-radius: 50%;
+    color:white;
+    height:fit-content;
+    margin-top: auto;
+    margin-bottom:auto;
+}
+
+.info-button:hover {
+    background-color:white;
+    color: #6f74a1;
+    border: 2px solid white;
+}
+
+.info-button:active {
+    background-color:white;
+    color: #6f74a1;
+    border: 2px solid white;
 }
 
 .reset-path-algorithm:hover {
@@ -26,11 +51,21 @@
 
 .custom-algorithm-select {
     border-radius: 5px;
-    padding: 5px;
+    height: fit-content;
+    margin:auto;
+    border-width: 0px;
+}
+
+.custom-algorithm-select > option:first {
+    margin-top: 5px;
 }
 
 .nav-path-algorithm-text {
     color:white;
     font-size:20px;
     font-weight:bold;
+}
+
+input#visualization-speed {
+    width:fit-content;
 }

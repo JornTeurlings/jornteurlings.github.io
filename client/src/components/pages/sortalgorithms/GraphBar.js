@@ -6,7 +6,7 @@ const GraphBar = (props) => {
         width: '5px',
         marginLeft: '1px',
         height: `${props.height}%`,
-        backgroundColor: props.color,
+        backgroundColor: props.searchValue === props.index ? 'yellow' : props.color,
     }
 
     return (
