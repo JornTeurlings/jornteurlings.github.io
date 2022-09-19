@@ -28,7 +28,7 @@ const options = {
       smooth: {
         enabled:true
       },
-      length: 250,
+      length: 150,
       hoverWidth: 2,
       width: 1.5,
     },
@@ -48,8 +48,9 @@ const options = {
       },
       font : {
         color: '#000000',
-        size: 30
-      }
+        size: 20
+      },
+      size : 20
     },
     interaction: {
       zoomView: false,

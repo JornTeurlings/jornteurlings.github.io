@@ -9,7 +9,7 @@ const GraphNavigation = (props) => {
     }
 
     return (
-        <div className="m-auto my-3 d-flex w-50 justify-content-center navigation-path-algorithm">
+        <div className="m-auto my-3 px-5 d-flex w-75 justify-content-center navigation-path-algorithm">
             <div className='d-flex ms-2'>
                 <p className="m-auto nav-path-algorithm-text">Algorithm: </p>
                 <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select form-select" defaultValue="prim" disabled={props.disabled}>
@@ -34,7 +34,7 @@ const GraphNavigation = (props) => {
                 type="range"
                 />
             </div>
-            <button onClick={() => props.setShowModal(true)} className="btn info-button ms-5" type="button"><i className="fa-solid fa-info"/></button>
+            <button onClick={() => props.setShowModal(true)} className="btn info-button ms-2" type="button"><i className="fa-solid fa-info"/></button>
 
         </div>
     )

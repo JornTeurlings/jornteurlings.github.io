@@ -11,7 +11,7 @@ const PathNavigation = (props) => {
     }
 
     return (
-        <div className="m-auto my-3 d-flex w-50 justify-content-around navigation-path-algorithm">
+        <div className="m-auto my-3 px-5 d-flex w-75 justify-content-around navigation-path-algorithm">
             <div className='d-flex justify-content-center'>
                 <div className='d-flex'>
                     <p className="m-auto nav-path-algorithm-text">Algorithm: </p>
@@ -25,7 +25,7 @@ const PathNavigation = (props) => {
                 {/* <button className="btn btn-warning mx-3" type="button">Example Grid</button> */}
                 <button disabled={props.active} onClick={onResetClick} className="btn reset-path-algorithm mx-3" type="button">Reset Grid</button>
             </div>
-            <button onClick={() => props.setShowModal(true)} className="btn info-button" type="button"><i className="fa-solid fa-info"/></button>
+            <button onClick={() => props.setShowModal(true)} className="btn info-button ms-2" type="button"><i className="fa-solid fa-info"/></button>
         </div>
     )
 
