@@ -7,7 +7,7 @@ import aStarAlgorithm from './algorithms/aStarAlgorithm';
 import PathGridBox from "./PathGridBox";
 import PathGridPoint from "./PathGridPoint";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef, useLayoutEffect } from "react";
 import { ItemTypes } from "../../../constants/ItemTypes";
 
 const matrixBuilder = (rowCount, columnCount, begin, finish) => {
@@ -72,19 +72,13 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorith
 }
 
 const PathGridContainer = (props) => {
-    let columnCount = 35;
-    let rowCount = 20;
+    const targetRef = useRef();
+    const [dimensions, setDimensions] = useState({ columns: 25, rows: 25})
     const [matrix, setMatrix] = useState([]);
     const [, updateState] = useState();
     const [beginPointCell, setBeginPointCell] = useState(20);
     const [finalPointCell, setFinalPointCell] = useState(80);
     const forceUpdate = useCallback(() => updateState({}), []);
-
-    const setFieldProperties = () => {
-        columnCount = (window.innerWidth) / 35;
-        rowCount = (document.getElementById('content-height').clientHeight) / 35;
-        setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
-    }
 
     const onClick = (event) => {
         const id = event.target.id; 
@@ -167,29 +161,25 @@ const PathGridContainer = (props) => {
 
     useEffect(() => {
         if (props.active) {
-            setMatrix(resetMatrix(rowCount, columnCount, beginPointCell, finalPointCell, matrix));
-            runAlgorithm(matrix, rowCount, columnCount, beginPointCell, finalPointCell, props.algorithm, setMatrix);
+            setMatrix(resetMatrix(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell, matrix));
+            runAlgorithm(matrix, dimensions.rows, dimensions.columns, beginPointCell, finalPointCell, props.algorithm, setMatrix);
             props.setActive(false);
         } else if (props.reset) {
-            setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));
+            setMatrix(matrixBuilder(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell));
             props.setReset(false);
         }
     }, [props.active, props.reset]);
 
     useEffect(() => {
-        // window.addEventListener('resize', setFieldProperties);
-    }, [])
-
-    useEffect(() => {
-        setMatrix(matrixBuilder(rowCount, columnCount, beginPointCell, finalPointCell));;
+        setMatrix(matrixBuilder(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell));
     }, []);
 
     return (
         <>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div id="content-height" className="path-grid-container my-5 d-flex justify-content-center">
-                    <div className="col-md-9 d-flex flex-wrap justify-content-center flex-column">
-                        {Object.keys(matrix).length !== 0 ? rowBuilder(rowCount, columnCount) : ''}
+                    <div className="d-flex flex-wrap justify-content-center flex-column">
+                        {Object.keys(matrix).length !== 0 ? rowBuilder(dimensions.rows, dimensions.columns) : ''}
                     </div>
                 </div>
             </DragDropContext>
