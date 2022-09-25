@@ -23,12 +23,12 @@ const options = {
       },
       font : {
         strokeWidth: 5,
-        size:20
+        size:15
       },
       smooth: {
         enabled:true
       },
-      length: 150,
+      length: 75,
       hoverWidth: 2,
       width: 1.5,
     },
@@ -48,9 +48,9 @@ const options = {
       },
       font : {
         color: '#000000',
-        size: 20
+        size: 15
       },
-      size : 20
+      size : 15
     },
     interaction: {
       zoomView: false,
@@ -59,6 +59,7 @@ const options = {
     manipulation: {
       enabled: true,
       addEdge: true,
+      editNode: true,
     },
     physics: {
       enabled: true,
@@ -79,18 +80,21 @@ const options = {
 
 const GraphContainer = (props) => {
     options.manipulation.addEdge = props.setNewEdge;
+    options.manipulation.editNode = props.setActiveNode;
 
     useEffect(() => {
       if (props.disabled) {
         document.querySelector('.vis-edit-mode').style.display = 'none';
+        document.querySelector('.vis-manipulation').style.display = 'none';
       } else {
         document.querySelector('.vis-edit-mode').style.display = 'block';
+        document.querySelector('.vis-manipulation').style.display = 'block';
       }
     }, [props.disabled])
 
     return ( 
         <div id="content-height" className="col-md-9  m-auto my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
-            <div className="col-md-9 d-flex">
+            <div className="col-md-12 d-flex">
               <div className="col-md-9">
                 <Graph
                   graph={props.graph}

@@ -152,7 +152,9 @@ const GraphDashboard = () => {
         },
         events: {
             select: ({ nodes, edges }) => {
-
+                if (nodes !== null) {
+                    
+                }
             },
             doubleClick: ({ pointer: { canvas } }) => {
                 createNode(canvas.x, canvas.y);
@@ -191,6 +193,14 @@ const GraphDashboard = () => {
             ...rest
           }
         });
+    }
+
+    const setActiveNode = (nodeData, callback) => {
+        var r = window.confirm("Set node " + nodeData.id + " as starting node?");
+        if (r === true) {
+            setStartingNode(nodeData.id)
+            callback(nodeData);
+        } 
     }
 
     const addEdgeCalback = (edgeData, callback) => {
@@ -259,6 +269,7 @@ const GraphDashboard = () => {
             />
             <GraphContainer 
                 setNewEdge={addEdgeCalback}
+                setActiveNode={setActiveNode}
                 startingNode={startingNode} 
                 nodeInformation={nodeInformation} 
                 activeSelection={activeSelection}
