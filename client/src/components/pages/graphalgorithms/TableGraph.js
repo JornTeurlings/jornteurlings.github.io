@@ -24,6 +24,7 @@ const TableGraph = (props) => {
                             <td className="align-center cell-area previous">{node.inTree ? "In Set" :"Not in Set"}</td>
                         </tr>
                     )
+                    
                 } else {
                     return (
                         <tr key={i} className="">
@@ -64,7 +65,7 @@ const TableGraph = (props) => {
     }
 
     const renderTable = () => {
-        if (Object.keys(props.information).length > 0) {
+        if (Object.keys(props.information).length > 0 && props.algorithm !== 'kruskal') {
             return (
                 <tbody>
                     {renderContent()}

@@ -16,9 +16,11 @@ import DijkstraInformation from './information/DijkstraInformation';
 import BellmanInformation from './information/BellmanInformation';
 import FloydInformation from './information/FloydInformation';
 import PrimInformation from './information/PrimInformation';
+import kruskalAlgorithm from './algorithms/kruskalAlgorithm';
+import {johnsonsAlgorithmLayup, johnsonsAlgorithmFinish} from './algorithms/johnsonsAlgorithm';
 
 
-const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph) => {
+const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph, addEdge = null) => {
     visualizationSpeed = (200) / (0.5 * visualizationSpeed);
     switch (algorithm) {
         case 'dijkstra': {
@@ -37,31 +39,20 @@ const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInforma
             await primAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph);
             break;
         }
+        case 'kruskal': {
+            await kruskalAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph);
+            break;
+        }
+        case 'johnsons': {
+            await johnsonsAlgorithmLayup(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph, addEdge);
+            await bellmanFordAlgorithm(graph, setGraph, setNodeInformation, graph.graph.nodes.length, visualizationSpeed);
+            break;
+        }
         default:
             break;
     }
     return;
 }
-
-// const createHTMLElement = (id, setStartingNode) => {
-//     const element = document.createElement("div");
-//     element.style.border="1px solid gray";
-//     element.style.height="2em";
-//     element.style.width="auto";
-//     element.style.display="flex";
-
-//     const text = document.createElement('p');
-//     text.innerText = "Starting Node?:"
-//     text.style.color = "black";
-//     element.appendChild(text);
-
-//     const button = document.createElement("button");
-//     button.onclick = () => setStartingNode(id);
-//     element.appendChild(button);
-
-//     return element;
-// }
-
 
 const selectAlgorithmInformation = (algorithm) => {
     switch (algorithm) {
@@ -83,7 +74,7 @@ const generateEdges = (nodes, algorithm) => {
     let newEdges = []
     nodes.forEach((value) => {
         let randomAmountEdges;
-        if (algorithm === 'prim') {
+        if (algorithm === 'prim' || algorithm === 'kruskal') {
             randomAmountEdges = Math.floor(Math.random()) + 2;    
         } else {
             randomAmountEdges = Math.floor(Math.random() * 1) + 2;    
@@ -97,13 +88,13 @@ const generateEdges = (nodes, algorithm) => {
             }
             alreadyAdded.push(to);
             let weight;
-            if (algorithm === 'bellman' || algorithm === 'floyd') {
+            if (algorithm === 'bellman' || algorithm === 'floyd' || algorithm === 'johnsons') {
                 weight = Math.floor(Math.random() * 15) - 2;
             } else {
                 weight = Math.floor(Math.random() * 10) + 1;
             }
 
-            if (algorithm === 'prim') {
+            if (algorithm === 'prim' || algorithm === 'kruskal') {
                 return {
                     from: value.id, 
                     to: to,
@@ -141,7 +132,7 @@ const GraphDashboard = () => {
     const [shuffle, setShuffle] = useState(false);
     const [activeAlgorithm, setActiveAlgorithm] = useState(false);
     const [nodeInformation, setNodeInformation] = useState({});
-    const [algorithm, setAlgorithm] = useState('prim');
+    const [algorithm, setAlgorithm] = useState('kruskal');
     const [activeSelection, setActiveSelection] = useState({nodes: [], edges: []})
     const [network, setNetwork] = useState({});
     const [graphState, setGraphState] = useState({
@@ -152,15 +143,13 @@ const GraphDashboard = () => {
         },
         events: {
             select: ({ nodes, edges }) => {
-                if (nodes !== null) {
-                    
-                }
             },
             doubleClick: ({ pointer: { canvas } }) => {
                 createNode(canvas.x, canvas.y);
             },
         }
     })
+    
     const { graph, events } = graphState;
 
     useEffect(() => {
@@ -195,6 +184,10 @@ const GraphDashboard = () => {
         });
     }
 
+    const addEdge = (array) => {
+        network.body.data.edges.add(array);
+    }
+
     const setActiveNode = (nodeData, callback) => {
         var r = window.confirm("Set node " + nodeData.id + " as starting node?");
         if (r === true) {
@@ -205,7 +198,7 @@ const GraphDashboard = () => {
 
     const addEdgeCalback = (edgeData, callback) => {
         let edgeChangeData = edgeData;
-        if (algorithm === 'bellman' || algorithm === 'floyd') {
+        if (algorithm === 'bellman' || algorithm === 'floyd' || algorithm === 'johnsons') {
             let weight = Math.floor(Math.random() * 15) - 2;
             edgeChangeData.weight = weight
             edgeChangeData.label = `${weight}`
@@ -233,7 +226,7 @@ const GraphDashboard = () => {
 
     const onAlgorithmRunClick = async () => {
         setActiveAlgorithm(true);
-        await runAlgorithm(graphState, algorithm, setActiveSelection, setNodeInformation, startingNode, speed, setGraphState);
+        await runAlgorithm(graphState, algorithm, setActiveSelection, setNodeInformation, startingNode, speed, setGraphState, addEdge);
         setActiveAlgorithm(false);
     }
 
@@ -275,7 +268,7 @@ const GraphDashboard = () => {
                 activeSelection={activeSelection}
                 disabled={activeAlgorithm}
                 algorithm={algorithm} 
-                setNetwork={setNetwork} 
+                setNetwork={setNetwork}
                 graph={graph} 
                 events={events}
                 />

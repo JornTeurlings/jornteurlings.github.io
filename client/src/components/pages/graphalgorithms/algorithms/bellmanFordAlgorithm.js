@@ -4,7 +4,6 @@ import promiseTimeout from '../../../../helpers/promiseTimeout';
 const createNodes = (nodes, type) => {
     let newObj = {};
 
-
     nodes.forEach((elem, i) => {
         newObj[elem.id] = {node: elem.id, distance: Number.MAX_SAFE_INTEGER, previous: undefined}
     });

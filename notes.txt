@@ -2,8 +2,6 @@ Algorithm App:
 
 	Algorithms:
 		SHORTEST PATH:
-			- Depth First Search
-			- A* search algorithm
 			- Johnsons's algorithm
 			- Viterbi Algorithm
 			- Lee Algorithm

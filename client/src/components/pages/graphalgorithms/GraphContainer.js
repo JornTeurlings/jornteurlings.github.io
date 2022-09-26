@@ -2,6 +2,7 @@ import './css/GraphContainer.css';
 import Graph from 'react-graph-vis';
 import TableGraph from './TableGraph';
 import { useEffect } from 'react';
+import { v4 as uuidv4} from 'uuid';
 
 const options = {
     layout: {
@@ -92,11 +93,13 @@ const GraphContainer = (props) => {
       }
     }, [props.disabled])
 
+    console.log(props.graph);
     return ( 
         <div id="content-height" className="col-md-9  m-auto my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
             <div className="col-md-12 d-flex">
               <div className="col-md-9">
                 <Graph
+                  key={uuidv4}
                   graph={props.graph}
                   options={options}
                   events={props.events}
