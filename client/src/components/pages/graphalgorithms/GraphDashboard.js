@@ -18,6 +18,7 @@ import FloydInformation from './information/FloydInformation';
 import PrimInformation from './information/PrimInformation';
 import kruskalAlgorithm from './algorithms/kruskalAlgorithm';
 import {johnsonsAlgorithmLayup, johnsonsAlgorithmFinish} from './algorithms/johnsonsAlgorithm';
+import KruskalInformation from './information/KruskalInformation';
 
 
 const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph, addEdge = null) => {
@@ -64,6 +65,8 @@ const selectAlgorithmInformation = (algorithm) => {
             return <FloydInformation />;
         case 'prim':
             return <PrimInformation />;
+        case 'kruskal':
+            return <KruskalInformation />;
         default:
             break;
     }

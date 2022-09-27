@@ -12,11 +12,11 @@ const GraphNavigation = (props) => {
         <div className="m-auto my-3 px-5 d-flex w-75 justify-content-center navigation-path-algorithm">
             <div className='d-flex ms-2'>
                 <p className="m-auto nav-path-algorithm-text">Algorithm: </p>
-                <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select form-select" defaultValue="kruskal" disabled={props.disabled}>
+                <select onChange={() => props.setAlgorithm((document.getElementById('select-graph-algorithm')).value)} id="select-graph-algorithm" className="mx-3 custom-algorithm-select form-select" defaultValue="dijkstra" disabled={props.disabled}>
                     <option value="dijkstra">Dijkstra's Algorithm</option>
                     <option value="bellman">Belmann-Ford Algorithm</option>
                     <option value="floyd">Floyd-Warshall Algorithm</option>
-                    <option value="johnsons">Johnsons Algorithm</option>
+                    {/* <option value="johnsons">Johnsons Algorithm</option> */}
                     <option value="prim">Prim's Algorithm</option>
                     <option value="kruskal">Kruskal's Algorithm</option>
                 </select>
