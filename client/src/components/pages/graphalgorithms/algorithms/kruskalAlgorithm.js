@@ -9,7 +9,7 @@ const createNodes = (nodes, type) => {
         newObj[elem.id] = {node: elem.id, cost: Number.MAX_SAFE_INTEGER, inTree: false, previous: undefined}
     });
 
-    return [newObj, (nodes.map(value => value.id))];
+    return newObj;
 }
 
 const findIndexMinimum = (edges) => {
@@ -40,11 +40,12 @@ const kruskalAlgorithm = async (graph, setGraph, setNodeInformation, startingPoi
     });
 
     let unionFind = new UnionFind((Object.values(nodes)).map(o => o.id));
-    let [nodeInformation, unvisitedNodes] = createNodes(nodes, NodeTypes.UNVISITED);
+    let nodeInformation = createNodes(nodes, NodeTypes.UNVISITED);
     nodeInformation[startingPoint].cost = 0;
     setNodeInformation(Object.values(nodeInformation));
 
     while (edges.length > 0) {
+        // eslint-disable-next-line no-loop-func
         let addedEdge = edges.find(o => o.id === findIndexMinimum(edges));
         if (!unionFind.connected(addedEdge.from, addedEdge.to)) {
             setEdgesGraph(({ graph: { nodes, edges }, ...rest }) => {

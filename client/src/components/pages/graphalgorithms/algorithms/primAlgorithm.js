@@ -25,12 +25,6 @@ const findIndexMinimum = (information, unvisited) => {
     return min;
 }
 
-const findValidEdges = (index, edges) => {
-    return Object.values(edges).filter((value, i) => {
-        return value.from === index ? [value.to, value.weight] : false;
-    })
-}
-
 const primAlgorithm = async (graph, setGraph, setNodeInformation, startingPoint, visualizationSpeed, setEdgesGraph) => {
     let {nodes, edges} = graph.graph;
     setEdgesGraph(({ graph: { nodes, edges }, ...rest }) => {

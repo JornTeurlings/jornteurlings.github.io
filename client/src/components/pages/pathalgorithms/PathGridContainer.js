@@ -7,7 +7,7 @@ import aStarAlgorithm from './algorithms/aStarAlgorithm';
 import PathGridBox from "./PathGridBox";
 import PathGridPoint from "./PathGridPoint";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useEffect, useState, useCallback, useRef, useLayoutEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ItemTypes } from "../../../constants/ItemTypes";
 
 const matrixBuilder = (rowCount, columnCount, begin, finish) => {
@@ -72,7 +72,7 @@ const runAlgorithm = async (grid, rowCount, columnCount, start, finish, algorith
 }
 
 const PathGridContainer = (props) => {
-    const targetRef = useRef();
+    // eslint-disable-next-line 
     const [dimensions, setDimensions] = useState({ columns: 25, rows: 25})
     const [matrix, setMatrix] = useState([]);
     const [, updateState] = useState();
@@ -162,16 +162,19 @@ const PathGridContainer = (props) => {
     useEffect(() => {
         if (props.active) {
             setMatrix(resetMatrix(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell, matrix));
-            runAlgorithm(matrix, dimensions.rows, dimensions.columns, beginPointCell, finalPointCell, props.algorithm, setMatrix);
-            props.setActive(false);
+            runAlgorithm(matrix, dimensions.rows, dimensions.columns, beginPointCell, finalPointCell, props.algorithm, setMatrix).then(() =>
+            props.setActive(false)
+            );
         } else if (props.reset) {
             setMatrix(matrixBuilder(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell));
             props.setReset(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.active, props.reset]);
 
     useEffect(() => {
         setMatrix(matrixBuilder(dimensions.rows, dimensions.columns, beginPointCell, finalPointCell));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

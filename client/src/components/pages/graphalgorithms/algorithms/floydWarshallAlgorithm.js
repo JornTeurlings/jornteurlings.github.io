@@ -1,4 +1,3 @@
-import { NodeTypes } from "./types";
 import promiseTimeout from "../../../../helpers/promiseTimeout";
 
 const createNodes = (nodes, edges) => {

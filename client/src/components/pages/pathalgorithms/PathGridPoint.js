@@ -6,7 +6,7 @@ const PathGridPoint = (props) => {
     const itemClass = props.type === ItemTypes.BEGIN ? 'fa-location-arrow' : 'fa-location-dot';
     return (
         <Draggable draggableId={`${itemType}`} index={0} key={props.number}>
-            {(provided, snapshot) => (
+            {(provided, _snapshot) => (
                 <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                     <i className={`fa-solid ${itemClass}`}></i>
                 </div>

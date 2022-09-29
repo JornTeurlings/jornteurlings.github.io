@@ -21,7 +21,7 @@ const PathGridBox = (props) => {
 
     return (
         <Droppable droppableId={`${props.id}`} type={ItemTypes.POINT} isDropDisabled={props.obstacle}>
-            {(provided, snapshot) => (
+            {(provided) => (
             <div 
                 ref={provided.innerRef}
                 className={sqrClass} 

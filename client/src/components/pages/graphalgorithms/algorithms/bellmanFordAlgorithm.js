@@ -8,32 +8,14 @@ const createNodes = (nodes, type) => {
         newObj[elem.id] = {node: elem.id, distance: Number.MAX_SAFE_INTEGER, previous: undefined}
     });
 
-    return [newObj, (nodes.map(value => value.id))];
+    return newObj;
 }
 
 
-const findIndexMinimum = (information, unvisited) => {
-    let min = null;
-    let minValue = Number.MAX_SAFE_INTEGER;
-    Object.values(information).map((node) => {
-        if (node.distance < minValue && unvisited.includes(node.node)) {
-            min = node.node;
-            minValue = node.distance;
-        }
-    })
-
-    return min;
-}
-
-const findValidEdges = (index, edges) => {
-    return Object.values(edges).filter((value, i) => {
-        return value.from === index ? [value.to, value.weight] : false;
-    })
-}
 
 const bellmanFordAlgorithm = async (graph, setGraph, setNodeInformation, startingPoint, visualizationSpeed) => {
     let {nodes, edges} = graph.graph;
-    let [nodeInformation, unvisitedNodes] = createNodes(nodes, NodeTypes.UNVISITED);
+    let nodeInformation = createNodes(nodes, NodeTypes.UNVISITED);
     nodeInformation[startingPoint].distance = 0;
     setNodeInformation(Object.values(nodeInformation));
 

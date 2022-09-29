@@ -1,14 +1,13 @@
 
 import GraphNavigation from './GraphNavigation';
 import GraphContainer from './GraphContainer';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import bellmanFordAlgorithm from './algorithms/bellmanFordAlgorithm';
 import dijkstraAlgorithm from './algorithms/dijkstraAlgorithm';
 import floydWarshallAlgorithm from './algorithms/floydWarshallAlgorithm';
 import primAlgorithm from './algorithms/primAlgorithm';
 
-import { randomColor } from '../../../helpers/randomColor';
 import { selectAlphabet } from '../../../helpers/selectAlphabet';
 import InfoModal from '../../components/InfoModal';
 import GraphInformation from './information/GraphInformation';
@@ -17,12 +16,12 @@ import BellmanInformation from './information/BellmanInformation';
 import FloydInformation from './information/FloydInformation';
 import PrimInformation from './information/PrimInformation';
 import kruskalAlgorithm from './algorithms/kruskalAlgorithm';
-import {johnsonsAlgorithmLayup, johnsonsAlgorithmFinish} from './algorithms/johnsonsAlgorithm';
+import {johnsonsAlgorithmLayup} from './algorithms/johnsonsAlgorithm';
 import KruskalInformation from './information/KruskalInformation';
 
 
 const runAlgorithm = async (graph, algorithm = 'merge', setGraph, setNodeInformation, startingNode, visualizationSpeed, setEdgesGraph, addEdge = null) => {
-    visualizationSpeed = (200) / (0.5 * visualizationSpeed);
+    visualizationSpeed = (200) / (0.3 * visualizationSpeed);
     switch (algorithm) {
         case 'dijkstra': {
             await dijkstraAlgorithm(graph, setGraph, setNodeInformation, startingNode, visualizationSpeed);
@@ -71,7 +70,6 @@ const selectAlgorithmInformation = (algorithm) => {
             break;
     }
 }
-let network;
 
 const generateEdges = (nodes, algorithm) => {
     let newEdges = []
@@ -135,7 +133,7 @@ const GraphDashboard = () => {
     const [shuffle, setShuffle] = useState(false);
     const [activeAlgorithm, setActiveAlgorithm] = useState(false);
     const [nodeInformation, setNodeInformation] = useState({});
-    const [algorithm, setAlgorithm] = useState('kruskal');
+    const [algorithm, setAlgorithm] = useState('dijkstra');
     const [activeSelection, setActiveSelection] = useState({nodes: [], edges: []})
     const [network, setNetwork] = useState({});
     const [graphState, setGraphState] = useState({
@@ -162,10 +160,9 @@ const GraphDashboard = () => {
             });    
         }
         
-    }, [activeSelection])
+    }, [activeSelection, network])
 
     const createNode = (x, y) => {
-        const color = randomColor();
         setGraphState(({ graph: { nodes, edges }, counter, ...rest }) => {
           const id = counter + 1;
           const from = Math.floor(Math.random() * (counter - 1)) + 1;
@@ -192,9 +189,11 @@ const GraphDashboard = () => {
     }
 
     const setActiveNode = (nodeData, callback) => {
-        var r = window.confirm("Set node " + nodeData.id + " as starting node?");
+        var r = window.confirm("Set node " + selectAlphabet(nodeData.id) + " as starting node?");
         if (r === true) {
             setStartingNode(nodeData.id)
+            callback(nodeData);
+        } else{
             callback(nodeData);
         } 
     }
@@ -250,6 +249,7 @@ const GraphDashboard = () => {
         });
         setNodeInformation({});
         setShuffle(false);
+           // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [algorithm, shuffle]);
 
 

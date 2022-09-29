@@ -1,5 +1,4 @@
 import promiseTimeout from '../../../../helpers/promiseTimeout';
-import { swap } from'../../../../helpers/swap.js';
 
 let arr = []
 

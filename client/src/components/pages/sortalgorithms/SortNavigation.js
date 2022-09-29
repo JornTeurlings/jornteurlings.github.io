@@ -11,6 +11,7 @@ const SortNavigation = (props) => {
 
     useEffect(() => {
         props.setAlgorithm((document.getElementById('select-sort-algorithm')).value);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

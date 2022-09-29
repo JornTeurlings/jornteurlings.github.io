@@ -23,10 +23,10 @@
     margin:auto;
 }
 
-.info-button {
-    border: 2px solid white;
+.info-button, .info-button:focus  {
+    border: 2px solid white !important;
     border-radius: 50%;
-    color:white;
+    color:white !important;
     height:fit-content;
     margin-top: auto;
     margin-bottom:auto;
@@ -34,11 +34,11 @@
 
 .info-button:hover {
     background-color:white;
-    color: #6f74a1;
+    color: #6f74a1 !important;
     border: 2px solid white;
 }
 
-.info-button:active {
+.info-button:active{
     background-color:white;
     color: #6f74a1;
     border: 2px solid white;

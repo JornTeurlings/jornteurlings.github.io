@@ -9,7 +9,8 @@ const GraphInformation = () => {
                 </p>
                 <p>
                     A random network is created which can be changed and altered through the addition of nodes and edges. Select the desired algorithm and let it run. If helpful, a table is shown with important information that is being used to complete
-                    the algorithm. 
+                    the algorithm. To select the starting node, click the edit button. Then click on a node and then the edit node button. This will give a pop up to choose whether
+                    you want to select this as the starting node.
                 </p>
             </div>
             <div className="col-md-10 m-auto d-flex flex-row justify-content-around my-5">

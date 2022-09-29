@@ -21,7 +21,6 @@ const PathNavigation = (props) => {
                 </select>
             </div>
             <button disabled={props.active} onClick={onRunClick} className="btn run-path-algorithm mx-3" type="button">Run Algorithm</button>
-            {/* <button className="btn btn-warning mx-3" type="button">Example Grid</button> */}
             <button disabled={props.active} onClick={onResetClick} className="btn reset-path-algorithm mx-3" type="button">Reset Grid</button>
             <button onClick={() => props.setShowModal(true)} className="btn info-button ms-2" type="button"><i className="fa-solid fa-info"/></button>
         </div>

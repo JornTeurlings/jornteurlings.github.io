@@ -93,7 +93,6 @@ const GraphContainer = (props) => {
       }
     }, [props.disabled])
 
-    console.log(props.graph);
     return ( 
         <div id="content-height" className="col-md-9  m-auto my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
             <div className="col-md-12 d-flex">

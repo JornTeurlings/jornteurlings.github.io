@@ -25,7 +25,7 @@ const GraphNavigation = (props) => {
             {/* <button className="btn btn-warning mx-3" type="button">Example Grid</button> */}
             <button onClick={onShuffleClick} disabled={props.disabled} className="btn reset-path-algorithm mx-3" type="button">New Graph</button>
             <div className="d-flex flex-column">
-                <label for="visualization-speed" className="form-label" style={{color: 'white'}}>Visualization Speed</label>
+                <label htmlFor="visualization-speed" className="form-label" style={{color: 'white'}}>Visualization Speed</label>
                 <input 
                 onChange={() => props.setSpeed(document.getElementById('visualization-speed').value)} 
                 id="visualization-speed" 

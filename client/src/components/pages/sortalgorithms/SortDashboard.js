@@ -126,7 +126,7 @@ const SortDashboard = () => {
         }
         
         setShuffle(false);
-    }, [shuffle])
+    }, [algorithm, shuffle])
 
 
     return (

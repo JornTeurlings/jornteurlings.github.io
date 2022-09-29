@@ -5,8 +5,7 @@ let arr = [];
 
 const quickSort = async (start, end, setArray, setColorsArray, visualizationSpeed ) => {
     if (start >= end) return;
-    let mid = (start + end)/2;
-    let i = start, j = end, duplicateOff = 0;
+    let i = start, j = end;
     let newColorsArray = [];
 
     const pivot = arr[j]; 
