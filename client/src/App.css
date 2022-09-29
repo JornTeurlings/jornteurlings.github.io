@@ -2,11 +2,16 @@
     flex-flow:column;
     height:100%;
     display:flex;
+    overflow: hidden;
 }
 
 html, body, div#root {
     height:100%;
     background-color: #fafafa;
+}
+
+::-webkit-scrollbar {
+    display: block;
 }
 
 .colors {
