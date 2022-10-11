@@ -37,13 +37,14 @@ const Navbar = () => {
                         >Dynamic Programming
                         </NavLink>
                     </li>
+                    */}
                     <li className='nav-item'>
                         <NavLink 
                         to="/data-algorithms"
                         className="nav-item-custom"
                         >Data Algorithms
                         </NavLink>
-                    </li> */}
+                    </li> 
                 </ul>
             </div>
         </nav>
