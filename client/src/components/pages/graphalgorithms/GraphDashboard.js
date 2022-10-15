@@ -162,6 +162,11 @@ const GraphDashboard = () => {
         
     }, [activeSelection, network])
 
+
+    /* Function to create a node based on a click event or other
+    *
+    */
+   
     const createNode = (x, y) => {
         setGraphState(({ graph: { nodes, edges }, counter, ...rest }) => {
           const id = counter + 1;

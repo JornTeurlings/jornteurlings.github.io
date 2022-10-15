@@ -1,0 +1,112 @@
+import '../graphalgorithms/css/GraphContainer.css';
+import Graph from 'react-graph-vis';
+import { useEffect } from 'react';
+import { v4 as uuidv4} from 'uuid';
+
+const options = {
+    layout: {
+      hierarchical: {
+        sortMethod: "directed"
+      },
+      improvedLayout: true
+    },
+    edges: {
+      arrows: {
+        to: {
+          type: 'triangle'
+        },
+        from: {
+          type: 'triangle'
+        }
+      },
+      color:  {
+        color: "#484b6a",
+        hover: "#6f74a1"
+      },
+      font : {
+        strokeWidth: 5,
+        size:15
+      },
+      smooth: {
+        enabled:true
+      },
+      length: 75,
+      hoverWidth: 2,
+      width: 1.5,
+    },
+    nodes: {
+      shape: 'square',
+      color: {
+        background: '#6f74a1',
+        border: '#0D7377',
+        hover: {
+          background: '#13A8AD',
+          border: '#6f74a1',
+        },
+        highlight: {
+          background: '#3ad3d8',
+          border: '#6f74a1'
+        }
+      },
+      font : {
+        color: '#000000',
+        size: 15
+      },
+      size : 15
+    },
+    interaction: {
+      zoomView: true,
+    },
+    manipulation: {
+      enabled: true,
+      addEdge: true,
+    },
+    physics: {
+      enabled: true,
+      stabilization: false,
+      barnesHut: {
+        theta: 0.5,
+        gravitationalConstant: -2000,
+        centralGravity: 0.3,
+        springLength: 150,
+        springConstant: 0.008,
+        damping: 0.09,
+        avoidOverlap: 1
+      },
+      solver: 'barnesHut'
+    }
+  };
+  
+
+const DataContainer = (props) => {
+
+    useEffect(() => {
+      if (props.disabled) {
+        document.querySelector('.vis-edit-mode').style.display = 'none';
+        document.querySelector('.vis-manipulation').style.display = 'none';
+      } else {
+        document.querySelector('.vis-edit-mode').style.display = 'block';
+        document.querySelector('.vis-manipulation').style.display = 'block';
+      }
+    }, [props.disabled])
+
+    return ( 
+        <div id="content-height" className="col-md-9  m-auto my-5 d-flex justify-content-center flex-grow-1 graph-container-styling">
+            <div className="col-md-12 d-flex">
+              <div className="col-md-9">
+                <Graph
+                  key={uuidv4}
+                  graph={props.graph}
+                  options={options}
+                  events={props.events}
+                  getNetwork={(network) => {
+                    props.setNetwork(network);
+                  }}
+                />
+              </div>
+            </div>
+        </div>
+    )
+}
+
+export default DataContainer;
