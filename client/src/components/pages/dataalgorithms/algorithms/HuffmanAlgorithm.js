@@ -1,3 +1,4 @@
+import promiseTimeout from '../../../../helpers/promiseTimeout';
 
 const constructWeightObject = (string) => {
     var counts= {}
@@ -41,6 +42,7 @@ const Huffman = async (string, graph, setNodeInformation, visualizationSpeed, se
     let {nodes, edges} = graph;
     let weightList = constructWeightObject(string);
     let instant = leafNodes(weightList);
+    console.log(weightList);
     setEdgesGraph(({ graph: { nodes, edges }, counter, ...rest }) => {
         return {
             counter: counter + instant.length,
@@ -51,7 +53,7 @@ const Huffman = async (string, graph, setNodeInformation, visualizationSpeed, se
             ...rest
         }
     }); 
-    let i = 0;
+
     while (weightList.length > 1) {
         const elements = weightList.splice(0, 2);
         let [newNode, newEdges] = createNodeAndEdges(elements[0], elements[1]);
@@ -59,7 +61,6 @@ const Huffman = async (string, graph, setNodeInformation, visualizationSpeed, se
             let newId = counter + 1;
             let foundNodes = nodes.filter(x => x.label === elements[0][0] || x.label === elements[1][0]);
             let neww = newEdges.map(x => ({ ...x, from: newId, to: foundNodes.find(y => y.label === x.nuff).id}));
-            console.log(neww);
             addEdge(neww);
             return {
                 counter: newId,
@@ -73,6 +74,7 @@ const Huffman = async (string, graph, setNodeInformation, visualizationSpeed, se
                 ...rest
             }
         });
+        await promiseTimeout({timeout: 1000});
         weightList.push([newNode.label, newNode.value])
         weightList = [...weightList].sort((x, y) => x[1] - y[1]);
     }
